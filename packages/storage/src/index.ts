@@ -1,0 +1,2 @@
+// @agentbox/storage — placeholder
+export {};

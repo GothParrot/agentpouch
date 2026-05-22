@@ -1,0 +1,2 @@
+// @agentbox/events — placeholder
+export {};

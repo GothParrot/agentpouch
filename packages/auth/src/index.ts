@@ -1,0 +1,2 @@
+// @agentbox/auth — placeholder
+export {};

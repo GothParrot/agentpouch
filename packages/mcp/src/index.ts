@@ -1,0 +1,2 @@
+// @agentbox/mcp — placeholder
+export {};

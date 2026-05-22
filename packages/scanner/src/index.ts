@@ -1,0 +1,2 @@
+// @agentbox/scanner — placeholder
+export {};

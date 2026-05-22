@@ -1,0 +1,2 @@
+// @agentbox/db — placeholder
+export {};

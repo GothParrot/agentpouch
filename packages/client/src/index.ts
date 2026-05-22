@@ -1,0 +1,2 @@
+// @agentbox/client — placeholder
+export {};

@@ -1,0 +1,2 @@
+// @agentbox/kv — placeholder
+export {};

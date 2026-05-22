@@ -34,5 +34,17 @@
   },
   "files": {
     "ignore": ["**/dist/**", "**/node_modules/**", "**/.turbo/**"]
-  }
+  },
+  "overrides": [
+    {
+      "include": ["packages/server/src/handlers/**"],
+      "linter": {
+        "rules": {
+          "complexity": {
+            "useLiteralKeys": "off"
+          }
+        }
+      }
+    }
+  ]
 }

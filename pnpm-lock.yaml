@@ -31,12 +31,74 @@ importers:
         version: 5.9.3
 
   apps/server:
+    dependencies:
+      '@agentbox/auth':
+        specifier: workspace:*
+        version: link:../../packages/auth
+      '@agentbox/config':
+        specifier: workspace:*
+        version: link:../../packages/config
+      '@agentbox/core':
+        specifier: workspace:*
+        version: link:../../packages/core
+      '@agentbox/db':
+        specifier: workspace:*
+        version: link:../../packages/db
+      '@agentbox/events':
+        specifier: workspace:*
+        version: link:../../packages/events
+      '@agentbox/kv':
+        specifier: workspace:*
+        version: link:../../packages/kv
+      '@agentbox/observability':
+        specifier: workspace:*
+        version: link:../../packages/observability
+      '@agentbox/queue':
+        specifier: workspace:*
+        version: link:../../packages/queue
+      '@agentbox/scanner':
+        specifier: workspace:*
+        version: link:../../packages/scanner
+      '@agentbox/server':
+        specifier: workspace:*
+        version: link:../../packages/server
+      '@agentbox/storage':
+        specifier: workspace:*
+        version: link:../../packages/storage
+      '@agentbox/storage-local':
+        specifier: workspace:*
+        version: link:../../packages/storage-local
+      '@hono/node-server':
+        specifier: ^2.0.3
+        version: 2.0.3(hono@4.12.22)
+      drizzle-orm:
+        specifier: ^0.45.2
+        version: 0.45.2(postgres@3.4.9)
+      hono:
+        specifier: ^4.12.22
+        version: 4.12.22
+      postgres:
+        specifier: ^3.4.9
+        version: 3.4.9
     devDependencies:
       typescript:
         specifier: '*'
         version: 5.9.3
 
   packages/auth:
+    dependencies:
+      '@agentbox/contracts':
+        specifier: workspace:*
+        version: link:../contracts
+      '@agentbox/db':
+        specifier: workspace:*
+        version: link:../db
+      drizzle-orm:
+        specifier: ^0.45.2
+        version: 0.45.2(postgres@3.4.9)
+      hono:
+        specifier: ^4.12.22
+        version: 4.12.22
     devDependencies:
       typescript:
         specifier: '*'
@@ -75,6 +137,34 @@ importers:
         version: 5.9.3
 
   packages/core:
+    dependencies:
+      '@agentbox/auth':
+        specifier: workspace:*
+        version: link:../auth
+      '@agentbox/contracts':
+        specifier: workspace:*
+        version: link:../contracts
+      '@agentbox/db':
+        specifier: workspace:*
+        version: link:../db
+      '@agentbox/events':
+        specifier: workspace:*
+        version: link:../events
+      '@agentbox/kv':
+        specifier: workspace:*
+        version: link:../kv
+      '@agentbox/queue':
+        specifier: workspace:*
+        version: link:../queue
+      '@agentbox/scanner':
+        specifier: workspace:*
+        version: link:../scanner
+      '@agentbox/storage':
+        specifier: workspace:*
+        version: link:../storage
+      drizzle-orm:
+        specifier: ^0.45.2
+        version: 0.45.2(postgres@3.4.9)
     devDependencies:
       typescript:
         specifier: '*'
@@ -97,6 +187,13 @@ importers:
         version: 5.9.3
 
   packages/events:
+    dependencies:
+      '@agentbox/db':
+        specifier: workspace:*
+        version: link:../db
+      drizzle-orm:
+        specifier: ^0.45.2
+        version: 0.45.2(postgres@3.4.9)
     devDependencies:
       typescript:
         specifier: '*'
@@ -133,6 +230,34 @@ importers:
         version: 5.9.3
 
   packages/server:
+    dependencies:
+      '@agentbox/auth':
+        specifier: workspace:*
+        version: link:../auth
+      '@agentbox/contracts':
+        specifier: workspace:*
+        version: link:../contracts
+      '@agentbox/core':
+        specifier: workspace:*
+        version: link:../core
+      '@agentbox/db':
+        specifier: workspace:*
+        version: link:../db
+      '@agentbox/observability':
+        specifier: workspace:*
+        version: link:../observability
+      '@hono/zod-openapi':
+        specifier: ^1.4.0
+        version: 1.4.0(hono@4.12.22)(zod@4.4.3)
+      drizzle-orm:
+        specifier: ^0.45.2
+        version: 0.45.2(postgres@3.4.9)
+      hono:
+        specifier: ^4.12.22
+        version: 4.12.22
+      zod:
+        specifier: ^4.4.3
+        version: 4.4.3
     devDependencies:
       typescript:
         specifier: '*'
@@ -145,6 +270,10 @@ importers:
         version: 5.9.3
 
   packages/storage-local:
+    dependencies:
+      '@agentbox/storage':
+        specifier: workspace:*
+        version: link:../storage
     devDependencies:
       typescript:
         specifier: '*'
@@ -676,6 +805,12 @@ packages:
     engines: {node: '>=18'}
     cpu: [x64]
     os: [win32]
+
+  '@hono/node-server@2.0.3':
+    resolution: {integrity: sha512-a0jV+/HRe3G5zjFID3zObAQFdkl6zpxTuqktdDDXS3MJKcrZIkB8OkLpNBlY/WXFqv2HF4a0takPej+aNFczWA==}
+    engines: {node: '>=20'}
+    peerDependencies:
+      hono: ^4
 
   '@hono/zod-openapi@1.4.0':
     resolution: {integrity: sha512-AFchqR1N/NxfI4hUOSGI2/g8zLROxA1OE7Oh5JJFlTaGxhrdRyH+93gd0tIBpb0z8s9r8hUoNnaOBfHbdb4NMw==}
@@ -1367,6 +1502,10 @@ snapshots:
 
   '@esbuild/win32-x64@0.28.0':
     optional: true
+
+  '@hono/node-server@2.0.3(hono@4.12.22)':
+    dependencies:
+      hono: 4.12.22
 
   '@hono/zod-openapi@1.4.0(hono@4.12.22)(zod@4.4.3)':
     dependencies:

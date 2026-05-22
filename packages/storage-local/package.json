@@ -18,5 +18,8 @@
   },
   "devDependencies": {
     "typescript": "*"
+  },
+  "dependencies": {
+    "@agentbox/storage": "workspace:*"
   }
 }

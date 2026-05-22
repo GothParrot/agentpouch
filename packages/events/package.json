@@ -18,5 +18,9 @@
   },
   "devDependencies": {
     "typescript": "*"
+  },
+  "dependencies": {
+    "@agentbox/db": "workspace:*",
+    "drizzle-orm": "^0.45.2"
   }
 }

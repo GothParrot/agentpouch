@@ -1,0 +1,8 @@
+**/node_modules
+**/.turbo
+**/dist
+**/*.md
+.git
+.github
+docker-compose*.yml
+Caddyfile

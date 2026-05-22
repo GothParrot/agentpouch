@@ -18,5 +18,16 @@
   },
   "devDependencies": {
     "typescript": "*"
+  },
+  "dependencies": {
+    "@agentbox/auth": "workspace:*",
+    "@agentbox/contracts": "workspace:*",
+    "@agentbox/core": "workspace:*",
+    "@agentbox/db": "workspace:*",
+    "@agentbox/observability": "workspace:*",
+    "@hono/zod-openapi": "^1.4.0",
+    "drizzle-orm": "^0.45.2",
+    "hono": "^4.12.22",
+    "zod": "^4.4.3"
   }
 }

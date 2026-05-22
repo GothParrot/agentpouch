@@ -18,5 +18,11 @@
   },
   "devDependencies": {
     "typescript": "*"
+  },
+  "dependencies": {
+    "@agentbox/contracts": "workspace:*",
+    "@agentbox/db": "workspace:*",
+    "drizzle-orm": "^0.45.2",
+    "hono": "^4.12.22"
   }
 }

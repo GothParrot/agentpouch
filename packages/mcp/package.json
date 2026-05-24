@@ -14,9 +14,15 @@
   "scripts": {
     "build": "tsc",
     "typecheck": "tsc --noEmit",
+    "test": "node --import tsx/esm --test src/index.test.ts",
     "clean": "rm -rf dist"
   },
   "devDependencies": {
     "typescript": "*"
+  },
+  "dependencies": {
+    "@agentbox/contracts": "workspace:*",
+    "@agentbox/core": "workspace:*",
+    "@modelcontextprotocol/sdk": "^1.29.0"
   }
 }

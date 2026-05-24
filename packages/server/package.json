@@ -21,6 +21,7 @@
   },
   "dependencies": {
     "@agentbox/auth": "workspace:*",
+    "@agentbox/mcp": "workspace:*",
     "@agentbox/contracts": "workspace:*",
     "@agentbox/core": "workspace:*",
     "@agentbox/db": "workspace:*",

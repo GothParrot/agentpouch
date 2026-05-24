@@ -1,4 +1,5 @@
 import { type AuthMiddlewareOptions, createAuthMiddleware } from "@agentbox/auth";
+import { createMcpHandler } from "@agentbox/mcp";
 import {
   createUploadRequestRoute,
   deleteFileRoute,
@@ -160,6 +161,17 @@ export function createApp(deps: AppDeps): OpenAPIHono {
   // ── Run manifest ─────────────────────────────────────────────────────────
 
   app.openapi(listRunArtifactsRoute, (c) => handleListRunArtifacts(c, core) as never);
+
+  // ── MCP endpoint ─────────────────────────────────────────────────────────
+  // Mounted at /v1/mcp; handles POST (tool calls), GET (SSE stream), DELETE (session).
+  // Auth middleware already runs for all /v1/* before reaching here.
+
+  const mcpHandler = createMcpHandler(core);
+
+  app.all("/v1/mcp", async (c) => {
+    const auth = c.get("auth");
+    return mcpHandler(auth, c.req.raw);
+  });
 
   return app;
 }

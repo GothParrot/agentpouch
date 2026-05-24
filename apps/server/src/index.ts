@@ -8,6 +8,7 @@ import { InMemoryKV } from "@agentbox/kv";
 import { InlineQueue } from "@agentbox/queue";
 import { NoopScanner } from "@agentbox/scanner";
 import { LocalDiskStorage } from "@agentbox/storage-local";
+import { S3Storage } from "@agentbox/storage-s3";
 import { startReconciler } from "@agentbox/core";
 import type { CoreDeps } from "@agentbox/core";
 import { upsertBootstrapToken } from "./bootstrap.js";
@@ -36,9 +37,20 @@ async function runServer(): Promise<void> {
   const metrics = new MetricsStore();
   const publicBaseUrl = config.PUBLIC_BASE_URL ?? `http://localhost:${config.PORT}`;
 
+  const storage =
+    config.STORAGE === "s3"
+      ? new S3Storage({
+          bucket: config.S3_BUCKET ?? (() => { throw new Error("S3_BUCKET is required when STORAGE=s3"); })(),
+          region: config.S3_REGION,
+          ...(config.S3_ENDPOINT !== undefined ? { endpoint: config.S3_ENDPOINT } : {}),
+          ...(config.S3_ACCESS_KEY_ID !== undefined ? { accessKeyId: config.S3_ACCESS_KEY_ID } : {}),
+          ...(config.S3_SECRET_ACCESS_KEY !== undefined ? { secretAccessKey: config.S3_SECRET_ACCESS_KEY } : {}),
+        })
+      : new LocalDiskStorage(config.STORAGE_PATH);
+
   const core: CoreDeps = {
     db,
-    storage: new LocalDiskStorage(config.STORAGE_PATH),
+    storage,
     storageBackend: config.STORAGE,
     queue: new InlineQueue(),
     kv: new InMemoryKV({ maxSize: 5000 }),

@@ -14,9 +14,16 @@
   "scripts": {
     "build": "tsc",
     "typecheck": "tsc --noEmit",
+    "test": "node --import tsx/esm --test src/index.test.ts",
     "clean": "rm -rf dist"
   },
   "devDependencies": {
+    "@agentbox/testkit": "workspace:*",
     "typescript": "*"
+  },
+  "dependencies": {
+    "@agentbox/storage": "workspace:*",
+    "@aws-sdk/client-s3": "^3.1053.0",
+    "@aws-sdk/s3-request-presigner": "^3.1053.0"
   }
 }

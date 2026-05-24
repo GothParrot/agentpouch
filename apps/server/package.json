@@ -32,6 +32,7 @@
     "@agentbox/server": "workspace:*",
     "@agentbox/storage": "workspace:*",
     "@agentbox/storage-local": "workspace:*",
+    "@agentbox/storage-s3": "workspace:*",
     "@hono/node-server": "^2.0.3",
     "drizzle-orm": "^0.45.2",
     "hono": "^4.12.22",

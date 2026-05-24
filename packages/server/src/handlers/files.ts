@@ -40,7 +40,7 @@ export async function handleFileDownload(c: Context, core: CoreDeps): Promise<Re
       ...(userAgent !== undefined ? { userAgent } : {}),
     });
 
-    const strategy = core.storage.getServeStrategy(blob.storageKey);
+    const strategy = await core.storage.getServeStrategy(blob.storageKey);
     if (strategy.type === "redirect") return c.redirect(strategy.url, 302);
 
     const stream = await core.storage.get(blob.storageKey);
@@ -178,7 +178,7 @@ export async function handleShortLink(c: Context, core: CoreDeps): Promise<Respo
     });
 
     if (isAgent) {
-      const strategy = core.storage.getServeStrategy(blob.storageKey);
+      const strategy = await core.storage.getServeStrategy(blob.storageKey);
       if (strategy.type === "redirect") return c.redirect(strategy.url, 302);
       const stream = await core.storage.get(blob.storageKey);
       return c.body(stream as ReadableStream, 200, {

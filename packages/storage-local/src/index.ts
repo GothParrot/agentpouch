@@ -35,7 +35,7 @@ export class LocalDiskStorage implements StorageProvider {
     }
   }
 
-  getServeStrategy(_key: string, _opts?: { ttlSeconds?: number }): ServeStrategy {
+  async getServeStrategy(_key: string, _opts?: { ttlSeconds?: number }): Promise<ServeStrategy> {
     return { type: "stream" };
   }
 }

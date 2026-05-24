@@ -9,5 +9,5 @@ export interface StorageProvider {
   put(key: string, body: ReadableStream<Uint8Array>, opts: PutOptions): Promise<void>;
   get(key: string): Promise<ReadableStream<Uint8Array>>;
   delete(key: string): Promise<void>;
-  getServeStrategy(key: string, opts?: { ttlSeconds?: number }): ServeStrategy;
+  getServeStrategy(key: string, opts?: { ttlSeconds?: number }): Promise<ServeStrategy>;
 }

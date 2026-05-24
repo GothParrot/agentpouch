@@ -28,6 +28,13 @@ importers:
         version: 5.9.3
 
   apps/cli:
+    dependencies:
+      '@agentbox/client':
+        specifier: workspace:*
+        version: link:../../packages/client
+      '@agentbox/contracts':
+        specifier: workspace:*
+        version: link:../../packages/contracts
     devDependencies:
       typescript:
         specifier: '*'
@@ -111,6 +118,10 @@ importers:
         version: 5.9.3
 
   packages/client:
+    dependencies:
+      '@agentbox/contracts':
+        specifier: workspace:*
+        version: link:../contracts
     devDependencies:
       typescript:
         specifier: '*'

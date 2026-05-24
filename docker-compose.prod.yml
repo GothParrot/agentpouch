@@ -1,0 +1,58 @@
+services:
+  agentbox:
+    image: agentbox/agentbox:latest
+    environment:
+      DATABASE_URL: postgres://agentbox:${DB_PASSWORD}@db:5432/agentbox
+      API_TOKEN: ${API_TOKEN}
+      PUBLIC_BASE_URL: https://${DOMAIN}
+      AUTO_MIGRATE: "true"
+      NODE_ENV: production
+      STORAGE: ${STORAGE:-local}
+      STORAGE_PATH: /data
+      # S3 / R2 (uncomment when STORAGE=s3)
+      # S3_ENDPOINT: ${S3_ENDPOINT}
+      # S3_BUCKET: ${S3_BUCKET}
+      # S3_REGION: ${S3_REGION:-us-east-1}
+      # S3_ACCESS_KEY_ID: ${S3_ACCESS_KEY_ID}
+      # S3_SECRET_ACCESS_KEY: ${S3_SECRET_ACCESS_KEY}
+    volumes:
+      - agentbox_data:/data
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: unless-stopped
+
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: agentbox
+      POSTGRES_USER: agentbox
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U agentbox"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    restart: unless-stopped
+
+  caddy:
+    image: caddy:2-alpine
+    ports:
+      - "80:80"
+      - "443:443"
+      - "443:443/udp"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
+    depends_on:
+      - agentbox
+    restart: unless-stopped
+
+volumes:
+  agentbox_data:
+  postgres_data:
+  caddy_data:
+  caddy_config:

@@ -1,0 +1,3 @@
+{$DOMAIN} {
+    reverse_proxy agentbox:8080
+}

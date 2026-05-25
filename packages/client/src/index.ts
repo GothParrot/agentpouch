@@ -59,7 +59,7 @@ export class AgentPouchClient {
   constructor(opts: { baseUrl: string; apiKey?: string }) {
     this.baseUrl = opts.baseUrl.replace(/\/$/, "");
     this.headers = { "content-type": "application/json" };
-    if (opts.apiKey) this.headers.authorization = `Bearer ${opts.apiKey}`;
+    if (opts.apiKey) this.headers["authorization"] = `Bearer ${opts.apiKey}`;
   }
 
   private async request<T>(
@@ -72,7 +72,7 @@ export class AgentPouchClient {
 
     let fetchBody: string | FormData | null = null;
     if (opts?.isForm && opts.body instanceof FormData) {
-      headers["content-type"] = undefined;
+      delete headers["content-type"];
       fetchBody = opts.body;
     } else if (opts?.body !== undefined) {
       fetchBody = JSON.stringify(opts.body);

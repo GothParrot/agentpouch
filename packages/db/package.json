@@ -1,5 +1,5 @@
 {
-  "name": "@agentbox/db",
+  "name": "@agentpouch/db",
   "version": "0.0.1",
   "private": true,
   "type": "module",
@@ -12,7 +12,7 @@
     }
   },
   "scripts": {
-    "build": "tsc",
+    "build": "tsc && cp -r src/migrations dist/migrations",
     "typecheck": "tsc --noEmit",
     "clean": "rm -rf dist",
     "db:generate": "drizzle-kit generate --config=drizzle.config.ts",

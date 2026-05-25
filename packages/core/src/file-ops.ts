@@ -1,4 +1,4 @@
-import { blobs, references } from "@agentbox/db";
+import { blobs, references } from "@agentpouch/db";
 import { and, desc, eq, isNull, lt } from "drizzle-orm";
 import {
   FileExpiredError,

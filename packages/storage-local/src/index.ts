@@ -3,7 +3,7 @@ import { mkdir, unlink } from "node:fs/promises";
 import { join } from "node:path";
 import { Readable } from "node:stream";
 import { pipeline } from "node:stream/promises";
-import type { PutOptions, ServeStrategy, StorageProvider } from "@agentbox/storage";
+import type { PutOptions, ServeStrategy, StorageProvider } from "@agentpouch/storage";
 
 export class LocalDiskStorage implements StorageProvider {
   constructor(private readonly baseDir: string) {}

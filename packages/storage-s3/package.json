@@ -1,5 +1,5 @@
 {
-  "name": "@agentbox/storage-s3",
+  "name": "@agentpouch/storage-s3",
   "version": "0.0.1",
   "private": true,
   "type": "module",
@@ -18,11 +18,11 @@
     "clean": "rm -rf dist"
   },
   "devDependencies": {
-    "@agentbox/testkit": "workspace:*",
+    "@agentpouch/testkit": "workspace:*",
     "typescript": "*"
   },
   "dependencies": {
-    "@agentbox/storage": "workspace:*",
+    "@agentpouch/storage": "workspace:*",
     "@aws-sdk/client-s3": "^3.1053.0",
     "@aws-sdk/s3-request-presigner": "^3.1053.0"
   }

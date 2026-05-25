@@ -1,6 +1,6 @@
 import { before, describe, it } from "node:test";
 import assert from "node:assert/strict";
-import type { StorageProvider } from "@agentbox/storage";
+import type { StorageProvider } from "@agentpouch/storage";
 
 async function readAll(readable: ReadableStream<Uint8Array>): Promise<Buffer> {
   const chunks: Uint8Array[] = [];

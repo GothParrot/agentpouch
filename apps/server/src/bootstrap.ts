@@ -1,7 +1,7 @@
 import { eq } from "drizzle-orm";
-import { hashToken } from "@agentbox/auth";
-import { type Db, tokens } from "@agentbox/db";
-import type { Logger } from "@agentbox/observability";
+import { hashToken } from "@agentpouch/auth";
+import { type Db, tokens } from "@agentpouch/db";
+import type { Logger } from "@agentpouch/observability";
 
 export async function upsertBootstrapToken(
   db: Db,

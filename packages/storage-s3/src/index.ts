@@ -5,7 +5,7 @@ import {
   S3Client,
 } from "@aws-sdk/client-s3";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
-import type { PutOptions, ServeStrategy, StorageProvider } from "@agentbox/storage";
+import type { PutOptions, ServeStrategy, StorageProvider } from "@agentpouch/storage";
 
 export type S3StorageOptions = {
   bucket: string;

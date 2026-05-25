@@ -1,5 +1,5 @@
 {
-  "name": "@agentbox/mcp",
+  "name": "@agentpouch/mcp",
   "version": "0.0.1",
   "private": true,
   "type": "module",
@@ -21,8 +21,8 @@
     "typescript": "*"
   },
   "dependencies": {
-    "@agentbox/contracts": "workspace:*",
-    "@agentbox/core": "workspace:*",
+    "@agentpouch/contracts": "workspace:*",
+    "@agentpouch/core": "workspace:*",
     "@modelcontextprotocol/sdk": "^1.29.0"
   }
 }

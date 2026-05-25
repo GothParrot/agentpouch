@@ -1,4 +1,4 @@
-import { blobs, references, uploadRequests } from "@agentbox/db";
+import { blobs, references, uploadRequests } from "@agentpouch/db";
 import { and, eq, isNull, lt, lte } from "drizzle-orm";
 import type { CoreDeps } from "./types.js";
 

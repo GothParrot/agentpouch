@@ -1,6 +1,6 @@
-# AgentBox
+# AgentPouch
 
-AgentBox is a self-hostable file handoff service for AI agents. It gives agents a place to store files, generate shareable links for humans, and receive uploads from humans — all without requiring any code changes to your application. Agents interact through a REST API or a built-in MCP server; humans receive clean download or upload links that work in any browser.
+AgentPouch is a self-hostable file handoff service for AI agents. It gives agents a place to store files, generate shareable links for humans, and receive uploads from humans — all without requiring any code changes to your application. Agents interact through a REST API or a built-in MCP server; humans receive clean download or upload links that work in any browser.
 
 ---
 
@@ -8,12 +8,12 @@ AgentBox is a self-hostable file handoff service for AI agents. It gives agents 
 
 ### Development / internal use
 
-Start AgentBox with a single Docker Compose command. No domain or TLS required.
+Start AgentPouch with a single Docker Compose command. No domain or TLS required.
 
 ```bash
 # Clone and start
-git clone https://github.com/agentbox-sh/agentbox
-cd agentbox
+git clone https://github.com/agentpouch-sh/agentpouch
+cd agentpouch
 docker compose up -d
 ```
 
@@ -24,12 +24,12 @@ The server starts on `http://localhost:8080`. Your API token is `dev-token-chang
 ```bash
 docker run -d \
   -p 8080:8080 \
-  -e DATABASE_URL="postgres://user:pass@host:5432/agentbox" \
+  -e DATABASE_URL="postgres://user:pass@host:5432/agentpouch" \
   -e API_TOKEN="$(openssl rand -hex 32)" \
   -e AUTO_MIGRATE=true \
   -e PUBLIC_BASE_URL="http://localhost:8080" \
-  -v agentbox_data:/data \
-  agentbox/agentbox
+  -v agentpouch_data:/data \
+  agentpouch/agentpouch
 ```
 
 ### Production (public human-facing links)
@@ -68,7 +68,7 @@ Add this block to your project's `.claude/settings.json`:
 ```jsonc
 {
   "mcpServers": {
-    "agentbox": {
+    "agentpouch": {
       "type": "http",
       "url": "http://localhost:8080/v1/mcp",
       "headers": {
@@ -90,39 +90,39 @@ The agent immediately gets 10 tools: `store_file`, `fetch_file`, `file_info`, `c
 Install:
 
 ```bash
-npm install -g @agentbox/cli
+npm install -g @agentpouch/cli
 ```
 
 Upload a file (guest mode, hosted service):
 
 ```bash
-agentbox upload ./report.pdf
+agentpouch upload ./report.pdf
 ```
 
 Upload to your self-hosted instance with a token:
 
 ```bash
-agentbox upload ./report.pdf --url http://localhost:8080 --token dev-token-change-me
+agentpouch upload ./report.pdf --url http://localhost:8080 --token dev-token-change-me
 ```
 
 All commands:
 
 ```bash
-agentbox upload <file> [--expires-in <preset>] [--filename <name>] [--json]
-agentbox download <id-or-url>
-agentbox upload-request create --expires-in <preset> [--filename-hint <name>] [--json]
-agentbox upload-request info <id> [--json]
-agentbox file info <id> [--json]
-agentbox file revoke <id>
-agentbox file delete <id>
-agentbox file extend <id> --ttl <preset>
+agentpouch upload <file> [--expires-in <preset>] [--filename <name>] [--json]
+agentpouch download <id-or-url>
+agentpouch upload-request create --expires-in <preset> [--filename-hint <name>] [--json]
+agentpouch upload-request info <id> [--json]
+agentpouch file info <id> [--json]
+agentpouch file revoke <id>
+agentpouch file delete <id>
+agentpouch file extend <id> --ttl <preset>
 ```
 
 Set defaults via environment:
 
 ```bash
-export AGENTBOX_URL=http://localhost:8080
-export AGENTBOX_API_KEY=dev-token-change-me
+export AGENTPOUCH_URL=http://localhost:8080
+export AGENTPOUCH_API_KEY=dev-token-change-me
 ```
 
 ---
@@ -157,22 +157,22 @@ See [docs/storage.md](./docs/storage.md) for full configuration details.
 
 ## Security note
 
-**AgentBox v0 does not scan uploaded files for malware.** All files are stored and served as-is. If you enable guest mode or expose your instance publicly, ensure you understand the implications. Malware scanning via ClamAV or a cloud scanning service is planned for v0.1.
+**AgentPouch v0 does not scan uploaded files for malware.** All files are stored and served as-is. If you enable guest mode or expose your instance publicly, ensure you understand the implications. Malware scanning via ClamAV or a cloud scanning service is planned for v0.1.
 
 ---
 
 ## Hosted vs self-hosted
 
-| | Self-hosted | Hosted (agentbox.sh) |
+| | Self-hosted | Hosted (agentpouch.sh) |
 |---|---|---|
 | Domain required | Yes (for production TLS) | No — domain and TLS provided |
 | Server required | Yes | No |
 | TLS setup | Automatic via Caddy | Automatic |
-| Data residency | Your server | Agentbox infrastructure |
+| Data residency | Your server | AgentPouch infrastructure |
 | Guest mode | Opt-in | Available on free tier |
 | Setup time | ~5 minutes | Instant |
 
-On the hosted service, agents and developers need no domain, no server, and no TLS setup. Point your MCP client at `https://agentbox.sh/v1/mcp` and go.
+On the hosted service, agents and developers need no domain, no server, and no TLS setup. Point your MCP client at `https://agentpouch.sh/v1/mcp` and go.
 
 ---
 

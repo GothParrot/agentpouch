@@ -1,5 +1,5 @@
 {
-  "name": "@agentbox/server",
+  "name": "@agentpouch/server",
   "version": "0.0.1",
   "private": true,
   "type": "module",
@@ -20,12 +20,12 @@
     "typescript": "*"
   },
   "dependencies": {
-    "@agentbox/auth": "workspace:*",
-    "@agentbox/mcp": "workspace:*",
-    "@agentbox/contracts": "workspace:*",
-    "@agentbox/core": "workspace:*",
-    "@agentbox/db": "workspace:*",
-    "@agentbox/observability": "workspace:*",
+    "@agentpouch/auth": "workspace:*",
+    "@agentpouch/mcp": "workspace:*",
+    "@agentpouch/contracts": "workspace:*",
+    "@agentpouch/core": "workspace:*",
+    "@agentpouch/db": "workspace:*",
+    "@agentpouch/observability": "workspace:*",
     "@hono/zod-openapi": "^1.4.0",
     "drizzle-orm": "^0.45.2",
     "hono": "^4.12.22",

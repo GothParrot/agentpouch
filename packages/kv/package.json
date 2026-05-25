@@ -1,5 +1,5 @@
 {
-  "name": "@agentbox/kv",
+  "name": "@agentpouch/kv",
   "version": "0.0.1",
   "private": true,
   "type": "module",

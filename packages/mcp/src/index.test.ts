@@ -23,7 +23,7 @@ import {
   StoreFileOutput,
   UploadRequestInfoInput,
   UploadRequestInfoOutput,
-} from "@agentbox/contracts";
+} from "@agentpouch/contracts";
 
 // Use crypto.randomUUID() so IDs satisfy Zod v4's strict RFC 4122 validation
 const REF_ID = crypto.randomUUID();

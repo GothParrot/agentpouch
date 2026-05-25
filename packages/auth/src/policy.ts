@@ -1,4 +1,4 @@
-import type { Token } from "@agentbox/db";
+import type { Token } from "@agentpouch/db";
 import type { Policy } from "./types.js";
 
 export type DefaultLimits = {

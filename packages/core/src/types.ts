@@ -1,10 +1,10 @@
-import type { AuthContext } from "@agentbox/auth";
-import type { Db } from "@agentbox/db";
-import type { EventSink } from "@agentbox/events";
-import type { KVStore } from "@agentbox/kv";
-import type { Queue } from "@agentbox/queue";
-import type { Scanner } from "@agentbox/scanner";
-import type { StorageProvider } from "@agentbox/storage";
+import type { AuthContext } from "@agentpouch/auth";
+import type { Db } from "@agentpouch/db";
+import type { EventSink } from "@agentpouch/events";
+import type { KVStore } from "@agentpouch/kv";
+import type { Queue } from "@agentpouch/queue";
+import type { Scanner } from "@agentpouch/scanner";
+import type { StorageProvider } from "@agentpouch/storage";
 
 export type { AuthContext };
 

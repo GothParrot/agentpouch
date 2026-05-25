@@ -1,5 +1,5 @@
 {
-  "name": "@agentbox/observability",
+  "name": "@agentpouch/observability",
   "version": "0.0.1",
   "private": true,
   "type": "module",

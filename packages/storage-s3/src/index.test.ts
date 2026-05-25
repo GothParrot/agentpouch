@@ -1,6 +1,6 @@
 import { before, it } from "node:test";
 import { CreateBucketCommand, S3Client } from "@aws-sdk/client-s3";
-import { runStorageConformanceSuite } from "@agentbox/testkit";
+import { runStorageConformanceSuite } from "@agentpouch/testkit";
 import { S3Storage } from "./index.js";
 
 const {
@@ -11,7 +11,7 @@ const {
   S3_REGION: rawRegion,
 } = process.env;
 
-const bucket = rawBucket ?? "agentbox-test";
+const bucket = rawBucket ?? "agentpouch-test";
 const region = rawRegion ?? "us-east-1";
 
 if (endpoint && accessKeyId && secretAccessKey) {

@@ -1,5 +1,5 @@
-import { ingestFile } from "@agentbox/core";
-import type { CoreDeps } from "@agentbox/core";
+import { ingestFile } from "@agentpouch/core";
+import type { CoreDeps } from "@agentpouch/core";
 import type { Context } from "hono";
 import { handleError, toApiReference } from "./utils.js";
 

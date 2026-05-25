@@ -1,5 +1,5 @@
 {
-  "name": "@agentbox/testkit",
+  "name": "@agentpouch/testkit",
   "version": "0.0.1",
   "private": true,
   "type": "module",
@@ -20,6 +20,6 @@
     "typescript": "*"
   },
   "dependencies": {
-    "@agentbox/storage": "workspace:*"
+    "@agentpouch/storage": "workspace:*"
   }
 }

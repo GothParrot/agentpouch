@@ -1,5 +1,5 @@
 {
-  "name": "@agentbox/storage-local",
+  "name": "@agentpouch/storage-local",
   "version": "0.0.1",
   "private": true,
   "type": "module",
@@ -18,10 +18,10 @@
     "clean": "rm -rf dist"
   },
   "devDependencies": {
-    "@agentbox/testkit": "workspace:*",
+    "@agentpouch/testkit": "workspace:*",
     "typescript": "*"
   },
   "dependencies": {
-    "@agentbox/storage": "workspace:*"
+    "@agentpouch/storage": "workspace:*"
   }
 }

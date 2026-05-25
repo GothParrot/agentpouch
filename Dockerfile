@@ -1,5 +1,5 @@
 # syntax=docker/dockerfile:1
-# Multi-stage build for AgentBox server
+# Multi-stage build for AgentPouch server
 
 FROM node:22-alpine AS builder
 
@@ -28,6 +28,7 @@ COPY packages/storage-local/package.json packages/storage-local/package.json
 COPY packages/storage-s3/package.json packages/storage-s3/package.json
 COPY packages/client/package.json packages/client/package.json
 COPY packages/testkit/package.json packages/testkit/package.json
+COPY apps/cli/package.json apps/cli/package.json
 
 RUN pnpm install --frozen-lockfile
 
@@ -36,28 +37,29 @@ COPY apps/server/src apps/server/src
 COPY packages packages
 
 # Build
-RUN pnpm turbo build --filter @agentbox/app-server...
+RUN pnpm turbo build --filter @agentpouch/app-server...
 
 # ─── Runtime ───────────────────────────────────────────────────────────────────
 
 FROM node:22-alpine AS runner
 
-RUN addgroup -g 1001 -S agentbox && adduser -u 1001 -S agentbox -G agentbox
+RUN addgroup -g 1001 -S agentpouch && adduser -u 1001 -S agentpouch -G agentpouch
 
 WORKDIR /app
 
 # Copy built workspace — pnpm workspace symlinks require the full structure
-COPY --from=builder --chown=agentbox:agentbox /app /app
+COPY --from=builder --chown=agentpouch:agentpouch /app /app
 
 ENV NODE_ENV=production
 ENV PORT=8080
 ENV STORAGE_PATH=/data
 
+RUN mkdir -p /data && chown agentpouch:agentpouch /data
 VOLUME /data
 
 EXPOSE 8080
 
-USER agentbox
+USER agentpouch
 
 # Supports both "server" (default) and "migrate" subcommands
 CMD ["node", "apps/server/dist/index.js"]

@@ -1,6 +1,6 @@
 import { eq } from "drizzle-orm";
-import type { Db } from "@agentbox/db";
-import { tokens } from "@agentbox/db";
+import type { Db } from "@agentpouch/db";
+import { tokens } from "@agentpouch/db";
 import type { Context, MiddlewareHandler, Next } from "hono";
 import { hashToken } from "./hash.js";
 import { resolvePolicy, type DefaultLimits } from "./policy.js";

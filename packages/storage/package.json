@@ -1,5 +1,5 @@
 {
-  "name": "@agentbox/storage",
+  "name": "@agentpouch/storage",
   "version": "0.0.1",
   "private": true,
   "type": "module",

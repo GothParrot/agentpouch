@@ -5,7 +5,7 @@ import type {
   RunManifest,
   UploadRequest,
   UploadRequestWithFile,
-} from "@agentbox/contracts";
+} from "@agentpouch/contracts";
 
 export type { Reference, ReferenceList, RunManifest, UploadRequest, UploadRequestWithFile };
 
@@ -42,17 +42,17 @@ export type ListFilesOpts = {
 
 export type CreateUploadRequestOpts = CreateUploadRequestBody;
 
-export class AgentBoxError extends Error {
+export class AgentPouchError extends Error {
   constructor(
     public readonly status: number,
     message: string,
   ) {
     super(message);
-    this.name = "AgentBoxError";
+    this.name = "AgentPouchError";
   }
 }
 
-export class AgentBoxClient {
+export class AgentPouchClient {
   private readonly baseUrl: string;
   private readonly headers: Record<string, string>;
 
@@ -92,7 +92,7 @@ export class AgentBoxClient {
       } catch {
         // ignore parse error
       }
-      throw new AgentBoxError(res.status, message);
+      throw new AgentPouchError(res.status, message);
     }
 
     if (res.status === 204) return undefined as T;
@@ -149,7 +149,7 @@ export class AgentBoxClient {
       const loc = res.headers.get("location");
       if (loc) return loc;
     }
-    if (!res.ok) throw new AgentBoxError(res.status, `HTTP ${res.status}`);
+    if (!res.ok) throw new AgentPouchError(res.status, `HTTP ${res.status}`);
     // Local storage — return the direct URL (caller streams from it)
     return `${this.baseUrl}/v1/files/${id}/download`;
   }

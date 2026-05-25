@@ -1,4 +1,4 @@
-import { AgentBoxError } from "@agentbox/core";
+import { AgentPouchError } from "@agentpouch/core";
 import type { Context } from "hono";
 
 export type ReferenceRow = {
@@ -55,7 +55,7 @@ export function toApiReference(ref: ReferenceRow, blob: BlobRow, publicBaseUrl: 
 }
 
 export function handleError(c: Context, err: unknown) {
-  if (err instanceof AgentBoxError) {
+  if (err instanceof AgentPouchError) {
     return c.json({ error: err.message, code: err.code }, err.statusHint as 400);
   }
   console.error("Unhandled error:", err);

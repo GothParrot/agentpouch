@@ -1,5 +1,5 @@
-import { type AuthMiddlewareOptions, createAuthMiddleware } from "@agentbox/auth";
-import { createMcpHandler } from "@agentbox/mcp";
+import { type AuthMiddlewareOptions, createAuthMiddleware } from "@agentpouch/auth";
+import { createMcpHandler } from "@agentpouch/mcp";
 import {
   createUploadRequestRoute,
   deleteFileRoute,
@@ -16,10 +16,10 @@ import {
   shortLinkRoute,
   uploadPageRoute,
   uploadSubmitRoute,
-} from "@agentbox/contracts";
-import type { CoreDeps } from "@agentbox/core";
-import type { Logger } from "@agentbox/observability";
-import type { MetricsStore } from "@agentbox/observability";
+} from "@agentpouch/contracts";
+import type { CoreDeps } from "@agentpouch/core";
+import type { Logger } from "@agentpouch/observability";
+import type { MetricsStore } from "@agentpouch/observability";
 import { OpenAPIHono } from "@hono/zod-openapi";
 import {
   handleDeleteFile,
@@ -133,7 +133,7 @@ export function createApp(deps: AppDeps): OpenAPIHono {
 
   app.doc("/openapi.json", {
     openapi: "3.0.0",
-    info: { title: "AgentBox API", version: "0.1.0" },
+    info: { title: "AgentPouch API", version: "0.1.0" },
     servers: [{ url: deps.core.publicBaseUrl }],
   });
 
@@ -141,7 +141,11 @@ export function createApp(deps: AppDeps): OpenAPIHono {
 
   const core = deps.core;
 
-  app.openapi(ingestRoute, (c) => handleIngest(c, core) as never);
+  // Use plain .post to bypass @hono/zod-openapi body validation — the library
+  // matches content types by exact string, so "multipart/form-data; boundary=xxx"
+  // doesn't match "multipart/form-data" and falls through to the JSON schema.
+  // The handler does its own content-type detection and parsing.
+  app.post("/v1/ingest", (c) => handleIngest(c, core) as never);
   app.openapi(fileInfoRoute, (c) => handleFileInfo(c, core) as never);
   app.openapi(fileDownloadRoute, (c) => handleFileDownload(c, core) as never);
   app.openapi(listFilesRoute, (c) => handleListFiles(c, core) as never);

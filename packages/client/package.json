@@ -1,5 +1,5 @@
 {
-  "name": "@agentbox/client",
+  "name": "@agentpouch/client",
   "version": "0.0.1",
   "private": true,
   "type": "module",
@@ -20,6 +20,6 @@
     "typescript": "*"
   },
   "dependencies": {
-    "@agentbox/contracts": "workspace:*"
+    "@agentpouch/contracts": "workspace:*"
   }
 }

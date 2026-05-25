@@ -1,4 +1,4 @@
-import { type Db, accessEvents, webhooks } from "@agentbox/db";
+import { type Db, accessEvents, webhooks } from "@agentpouch/db";
 import { and, eq } from "drizzle-orm";
 
 export type EventType =
@@ -8,7 +8,7 @@ export type EventType =
   | "file.deleted"
   | "file.expired";
 
-export type AgentBoxEvent = {
+export type AgentPouchEvent = {
   type: EventType;
   referenceId: string;
   tenantId: string | null;
@@ -18,11 +18,11 @@ export type AgentBoxEvent = {
 };
 
 export interface EventSink {
-  emit(event: AgentBoxEvent): void;
+  emit(event: AgentPouchEvent): void;
 }
 
 export class NoopEventSink implements EventSink {
-  emit(_event: AgentBoxEvent): void {}
+  emit(_event: AgentPouchEvent): void {}
 }
 
 type DbEventType = "created" | "accessed" | "revoked" | "deleted" | "expired";
@@ -46,14 +46,14 @@ async function hmacSign(secret: string, body: string): Promise<string> {
     .join("");
 }
 
-async function dispatchWebhook(url: string, secret: string, event: AgentBoxEvent): Promise<void> {
+async function dispatchWebhook(url: string, secret: string, event: AgentPouchEvent): Promise<void> {
   const payload = JSON.stringify({ ...event, timestamp: new Date().toISOString() });
   const sig = await hmacSign(secret, payload);
   await fetch(url, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      "X-AgentBox-Signature": `sha256=${sig}`,
+      "X-AgentPouch-Signature": `sha256=${sig}`,
     },
     body: payload,
     signal: AbortSignal.timeout(5000),
@@ -63,7 +63,7 @@ async function dispatchWebhook(url: string, secret: string, event: AgentBoxEvent
 export class PostgresEventSink implements EventSink {
   constructor(private readonly db: Db) {}
 
-  emit(event: AgentBoxEvent): void {
+  emit(event: AgentPouchEvent): void {
     // Fire-and-forget: event recording must never block the serve path
     void this.db
       .insert(accessEvents)
@@ -81,7 +81,7 @@ export class PostgresEventSink implements EventSink {
     }
   }
 
-  private async dispatchWebhooks(event: AgentBoxEvent): Promise<void> {
+  private async dispatchWebhooks(event: AgentPouchEvent): Promise<void> {
     const { tenantId } = event;
     if (!tenantId) return;
     try {

@@ -2,9 +2,9 @@ services:
   db:
     image: postgres:16-alpine
     environment:
-      POSTGRES_DB: agentbox
-      POSTGRES_USER: agentbox
-      POSTGRES_PASSWORD: agentbox
+      POSTGRES_DB: agentpouch
+      POSTGRES_USER: agentpouch
+      POSTGRES_PASSWORD: agentpouch
     ports:
       - "5432:5432"
     tmpfs:

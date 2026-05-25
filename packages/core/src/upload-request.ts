@@ -1,5 +1,5 @@
-import type { Policy } from "@agentbox/auth";
-import { uploadRequests } from "@agentbox/db";
+import type { Policy } from "@agentpouch/auth";
+import { uploadRequests } from "@agentpouch/db";
 import { eq } from "drizzle-orm";
 import {
   InvalidPresetError,

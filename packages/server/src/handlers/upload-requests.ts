@@ -1,6 +1,6 @@
-import { completeUploadRequest, createUploadRequest } from "@agentbox/core";
-import type { CoreDeps } from "@agentbox/core";
-import { blobs, references, uploadRequests } from "@agentbox/db";
+import { completeUploadRequest, createUploadRequest } from "@agentpouch/core";
+import type { CoreDeps } from "@agentpouch/core";
+import { blobs, references, uploadRequests } from "@agentpouch/db";
 import { eq } from "drizzle-orm";
 import type { Context } from "hono";
 import { handleError, toApiReference } from "./utils.js";
@@ -112,7 +112,7 @@ export async function handleUploadPage(c: Context, core: CoreDeps) {
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Upload a file — AgentBox</title>
+  <title>Upload a file — AgentPouch</title>
   <style>
     body{font-family:system-ui,sans-serif;max-width:480px;margin:80px auto;padding:0 1rem;color:#1a1a1a}
     h1{font-size:1.25rem}p{color:#555;font-size:.9rem}

@@ -1,10 +1,10 @@
 {
-  "name": "@agentbox/cli",
+  "name": "@agentpouch/cli",
   "version": "0.0.1",
   "private": true,
   "type": "module",
   "bin": {
-    "agentbox": "./dist/index.js"
+    "agentpouch": "./dist/index.js"
   },
   "main": "./dist/index.js",
   "scripts": {
@@ -16,7 +16,7 @@
     "typescript": "*"
   },
   "dependencies": {
-    "@agentbox/client": "workspace:*",
-    "@agentbox/contracts": "workspace:*"
+    "@agentpouch/client": "workspace:*",
+    "@agentpouch/contracts": "workspace:*"
   }
 }

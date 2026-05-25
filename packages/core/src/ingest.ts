@@ -1,4 +1,4 @@
-import { blobs, references } from "@agentbox/db";
+import { blobs, references } from "@agentpouch/db";
 import { and, eq, isNull } from "drizzle-orm";
 import {
   FileTooLargeError,

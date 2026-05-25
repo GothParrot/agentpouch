@@ -1,5 +1,5 @@
 {
-  "name": "@agentbox/queue",
+  "name": "@agentpouch/queue",
   "version": "0.0.1",
   "private": true,
   "type": "module",

@@ -1,5 +1,5 @@
 {
-  "name": "agentbox",
+  "name": "agentpouch",
   "private": true,
   "scripts": {
     "build": "turbo build",

@@ -192,7 +192,7 @@ export const shortLinkRoute = createRoute({
   request: {
     params: z.object({ shortid: z.string() }),
     headers: z.object({
-      "x-agentbox-password": z.string().optional().openapi({
+      "x-agentpouch-password": z.string().optional().openapi({
         description: "Password for protected files",
       }),
     }),

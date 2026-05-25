@@ -11,7 +11,7 @@ import {
   RevokeFileInput,
   StoreFileInput,
   UploadRequestInfoInput,
-} from "@agentbox/contracts";
+} from "@agentpouch/contracts";
 import {
   createUploadRequest,
   deleteFile,
@@ -23,7 +23,7 @@ import {
   revokeFile,
   type AuthContext,
   type CoreDeps,
-} from "@agentbox/core";
+} from "@agentpouch/core";
 
 // ─── Shared helpers ───────────────────────────────────────────────────────────
 
@@ -90,7 +90,7 @@ function fail(message: string) {
 // ─── Server builder ───────────────────────────────────────────────────────────
 
 function buildServer(core: CoreDeps, auth: AuthContext): McpServer {
-  const server = new McpServer({ name: "agentbox", version: "0.1.0" });
+  const server = new McpServer({ name: "agentpouch", version: "0.1.0" });
   const { publicBaseUrl } = core;
 
   // ── store_file ──────────────────────────────────────────────────────────────

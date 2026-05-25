@@ -1,5 +1,5 @@
 {
-  "name": "@agentbox/events",
+  "name": "@agentpouch/events",
   "version": "0.0.1",
   "private": true,
   "type": "module",
@@ -20,7 +20,7 @@
     "typescript": "*"
   },
   "dependencies": {
-    "@agentbox/db": "workspace:*",
+    "@agentpouch/db": "workspace:*",
     "drizzle-orm": "^0.45.2"
   }
 }

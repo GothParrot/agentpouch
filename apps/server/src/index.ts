@@ -1,16 +1,16 @@
 import { serve } from "@hono/node-server";
-import { loadConfig } from "@agentbox/config";
-import { createDb, migrate } from "@agentbox/db";
-import { createApp } from "@agentbox/server";
-import { createLogger, MetricsStore } from "@agentbox/observability";
-import { PostgresEventSink } from "@agentbox/events";
-import { InMemoryKV } from "@agentbox/kv";
-import { InlineQueue } from "@agentbox/queue";
-import { NoopScanner } from "@agentbox/scanner";
-import { LocalDiskStorage } from "@agentbox/storage-local";
-import { S3Storage } from "@agentbox/storage-s3";
-import { startReconciler } from "@agentbox/core";
-import type { CoreDeps } from "@agentbox/core";
+import { loadConfig } from "@agentpouch/config";
+import { createDb, migrate } from "@agentpouch/db";
+import { createApp } from "@agentpouch/server";
+import { createLogger, MetricsStore } from "@agentpouch/observability";
+import { PostgresEventSink } from "@agentpouch/events";
+import { InMemoryKV } from "@agentpouch/kv";
+import { InlineQueue } from "@agentpouch/queue";
+import { NoopScanner } from "@agentpouch/scanner";
+import { LocalDiskStorage } from "@agentpouch/storage-local";
+import { S3Storage } from "@agentpouch/storage-s3";
+import { startReconciler } from "@agentpouch/core";
+import type { CoreDeps } from "@agentpouch/core";
 import { upsertBootstrapToken } from "./bootstrap.js";
 
 const logger = createLogger({ level: "info" });
@@ -81,7 +81,7 @@ async function runServer(): Promise<void> {
   });
 
   const server = serve({ fetch: app.fetch, port: config.PORT }, () => {
-    logger.info("agentbox listening", { port: config.PORT, publicBaseUrl });
+    logger.info("agentpouch listening", { port: config.PORT, publicBaseUrl });
   });
 
   for (const signal of ["SIGTERM", "SIGINT"] as const) {

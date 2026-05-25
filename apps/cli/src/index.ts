@@ -2,17 +2,17 @@
 import { readFileSync, statSync } from "node:fs";
 import { basename } from "node:path";
 import { parseArgs } from "node:util";
-import { AgentBoxClient, AgentBoxError } from "@agentbox/client";
-import type { ExpiryPreset } from "@agentbox/client";
+import { AgentPouchClient, AgentPouchError } from "@agentpouch/client";
+import type { ExpiryPreset } from "@agentpouch/client";
 
 // ─── Config ──────────────────────────────────────────────────────────────────
 
-const { AGENTBOX_URL: envUrl, AGENTBOX_API_KEY: envKey } = process.env;
-const DEFAULT_BASE_URL = envUrl ?? "https://agentbox.sh";
+const { AGENTPOUCH_URL: envUrl, AGENTPOUCH_API_KEY: envKey } = process.env;
+const DEFAULT_BASE_URL = envUrl ?? "https://agentpouch.sh";
 
-function makeClient(baseUrl: string, apiKey?: string): AgentBoxClient {
+function makeClient(baseUrl: string, apiKey?: string): AgentPouchClient {
   const key = apiKey ?? envKey;
-  return new AgentBoxClient({ baseUrl, ...(key !== undefined ? { apiKey: key } : {}) });
+  return new AgentPouchClient({ baseUrl, ...(key !== undefined ? { apiKey: key } : {}) });
 }
 
 // ─── Output helpers ───────────────────────────────────────────────────────────
@@ -35,21 +35,21 @@ function die(msg: string): never {
 // ─── Usage ───────────────────────────────────────────────────────────────────
 
 const USAGE = `
-agentbox — file handoff service CLI
+agentpouch — file handoff service CLI
 
 Usage:
-  agentbox upload <file>              Upload a file
-  agentbox download <id-or-url>       Download a file to stdout
-  agentbox upload-request create      Create an upload request link
-  agentbox upload-request info <id>   Poll upload request status
-  agentbox file info <id>             Get file metadata
-  agentbox file revoke <id>           Revoke a file link
-  agentbox file delete <id>           Soft-delete a file
-  agentbox file extend <id>           Extend file expiry
+  agentpouch upload <file>              Upload a file
+  agentpouch download <id-or-url>       Download a file to stdout
+  agentpouch upload-request create      Create an upload request link
+  agentpouch upload-request info <id>   Poll upload request status
+  agentpouch file info <id>             Get file metadata
+  agentpouch file revoke <id>           Revoke a file link
+  agentpouch file delete <id>           Soft-delete a file
+  agentpouch file extend <id>           Extend file expiry
 
 Global flags:
-  --url <url>          Server base URL (default: $AGENTBOX_URL or https://agentbox.sh)
-  --token <key>        API key (default: $AGENTBOX_API_KEY, omit for guest mode)
+  --url <url>          Server base URL (default: $AGENTPOUCH_URL or https://agentpouch.sh)
+  --token <key>        API key (default: $AGENTPOUCH_API_KEY, omit for guest mode)
   --json               Machine-readable JSON output
 
 upload flags:
@@ -98,7 +98,7 @@ const [cmd, sub, arg] = positionals;
 
 async function cmdUpload(): Promise<void> {
   const filePath = sub;
-  if (!filePath) die("usage: agentbox upload <file>");
+  if (!filePath) die("usage: agentpouch upload <file>");
 
   try {
     statSync(filePath);
@@ -129,7 +129,7 @@ async function cmdUpload(): Promise<void> {
 
 async function cmdDownload(): Promise<void> {
   let id = sub;
-  if (!id) die("usage: agentbox download <id-or-url>");
+  if (!id) die("usage: agentpouch download <id-or-url>");
 
   // Accept agent_link URLs: extract UUID at end
   const uuidMatch = /([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})$/i.exec(id);
@@ -171,7 +171,7 @@ async function cmdUploadRequest(): Promise<void> {
 
   if (sub === "info") {
     const id = arg;
-    if (!id) die("usage: agentbox upload-request info <id>");
+    if (!id) die("usage: agentpouch upload-request info <id>");
     const req = await client.getUploadRequest(id);
     out(req, json);
     return;
@@ -184,28 +184,28 @@ async function cmdFile(): Promise<void> {
   const id = arg;
 
   if (sub === "info") {
-    if (!id) die("usage: agentbox file info <id>");
+    if (!id) die("usage: agentpouch file info <id>");
     const ref = await client.fileInfo(id);
     out(ref, json);
     return;
   }
 
   if (sub === "revoke") {
-    if (!id) die("usage: agentbox file revoke <id>");
+    if (!id) die("usage: agentpouch file revoke <id>");
     const result = await client.revokeFile(id);
     out(json ? result : `revoked: ${result.revoked_at}`, json);
     return;
   }
 
   if (sub === "delete") {
-    if (!id) die("usage: agentbox file delete <id>");
+    if (!id) die("usage: agentpouch file delete <id>");
     await client.deleteFile(id);
     out(json ? { id, deleted: true } : `deleted: ${id}`, json);
     return;
   }
 
   if (sub === "extend") {
-    if (!id) die("usage: agentbox file extend <id> --ttl <preset>");
+    if (!id) die("usage: agentpouch file extend <id> --ttl <preset>");
     const ttl = values["ttl"] as ExpiryPreset | undefined;
     if (!ttl) die("--ttl is required for file extend");
     const result = await client.extendExpiry(id, ttl);
@@ -224,9 +224,9 @@ async function main(): Promise<void> {
     if (cmd === "download") return await cmdDownload();
     if (cmd === "upload-request") return await cmdUploadRequest();
     if (cmd === "file") return await cmdFile();
-    die(`unknown command: ${cmd}. Run agentbox --help for usage.`);
+    die(`unknown command: ${cmd}. Run agentpouch --help for usage.`);
   } catch (err) {
-    if (err instanceof AgentBoxError) {
+    if (err instanceof AgentPouchError) {
       die(`${err.status}: ${err.message}`);
     }
     throw err;

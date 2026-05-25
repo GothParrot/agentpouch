@@ -1,5 +1,5 @@
 {
-  "name": "@agentbox/auth",
+  "name": "@agentpouch/auth",
   "version": "0.0.1",
   "private": true,
   "type": "module",
@@ -20,8 +20,8 @@
     "typescript": "*"
   },
   "dependencies": {
-    "@agentbox/contracts": "workspace:*",
-    "@agentbox/db": "workspace:*",
+    "@agentpouch/contracts": "workspace:*",
+    "@agentpouch/db": "workspace:*",
     "drizzle-orm": "^0.45.2",
     "hono": "^4.12.22"
   }

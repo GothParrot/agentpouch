@@ -1,6 +1,6 @@
 # Storage Backends
 
-AgentBox supports two storage backends: **local disk** (default) and **S3-compatible** object storage.
+AgentPouch supports two storage backends: **local disk** (default) and **S3-compatible** object storage.
 
 Set `STORAGE=local` or `STORAGE=s3` in your environment.
 
@@ -42,6 +42,6 @@ Serving issues a presigned redirect (302) — file bytes never pass through the 
 
 ### Bucket setup
 
-Create the bucket before starting AgentBox. The bucket does not need to be public — presigned URLs are time-limited and signed with your credentials.
+Create the bucket before starting AgentPouch. The bucket does not need to be public — presigned URLs are time-limited and signed with your credentials.
 
 Presigned URL TTL defaults to 3600 seconds (1 hour) and is not currently configurable per-request.

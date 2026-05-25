@@ -29,10 +29,10 @@ importers:
 
   apps/cli:
     dependencies:
-      '@agentbox/client':
+      '@agentpouch/client':
         specifier: workspace:*
         version: link:../../packages/client
-      '@agentbox/contracts':
+      '@agentpouch/contracts':
         specifier: workspace:*
         version: link:../../packages/contracts
     devDependencies:
@@ -42,43 +42,43 @@ importers:
 
   apps/server:
     dependencies:
-      '@agentbox/auth':
+      '@agentpouch/auth':
         specifier: workspace:*
         version: link:../../packages/auth
-      '@agentbox/config':
+      '@agentpouch/config':
         specifier: workspace:*
         version: link:../../packages/config
-      '@agentbox/core':
+      '@agentpouch/core':
         specifier: workspace:*
         version: link:../../packages/core
-      '@agentbox/db':
+      '@agentpouch/db':
         specifier: workspace:*
         version: link:../../packages/db
-      '@agentbox/events':
+      '@agentpouch/events':
         specifier: workspace:*
         version: link:../../packages/events
-      '@agentbox/kv':
+      '@agentpouch/kv':
         specifier: workspace:*
         version: link:../../packages/kv
-      '@agentbox/observability':
+      '@agentpouch/observability':
         specifier: workspace:*
         version: link:../../packages/observability
-      '@agentbox/queue':
+      '@agentpouch/queue':
         specifier: workspace:*
         version: link:../../packages/queue
-      '@agentbox/scanner':
+      '@agentpouch/scanner':
         specifier: workspace:*
         version: link:../../packages/scanner
-      '@agentbox/server':
+      '@agentpouch/server':
         specifier: workspace:*
         version: link:../../packages/server
-      '@agentbox/storage':
+      '@agentpouch/storage':
         specifier: workspace:*
         version: link:../../packages/storage
-      '@agentbox/storage-local':
+      '@agentpouch/storage-local':
         specifier: workspace:*
         version: link:../../packages/storage-local
-      '@agentbox/storage-s3':
+      '@agentpouch/storage-s3':
         specifier: workspace:*
         version: link:../../packages/storage-s3
       '@hono/node-server':
@@ -100,10 +100,10 @@ importers:
 
   packages/auth:
     dependencies:
-      '@agentbox/contracts':
+      '@agentpouch/contracts':
         specifier: workspace:*
         version: link:../contracts
-      '@agentbox/db':
+      '@agentpouch/db':
         specifier: workspace:*
         version: link:../db
       drizzle-orm:
@@ -119,7 +119,7 @@ importers:
 
   packages/client:
     dependencies:
-      '@agentbox/contracts':
+      '@agentpouch/contracts':
         specifier: workspace:*
         version: link:../contracts
     devDependencies:
@@ -155,28 +155,28 @@ importers:
 
   packages/core:
     dependencies:
-      '@agentbox/auth':
+      '@agentpouch/auth':
         specifier: workspace:*
         version: link:../auth
-      '@agentbox/contracts':
+      '@agentpouch/contracts':
         specifier: workspace:*
         version: link:../contracts
-      '@agentbox/db':
+      '@agentpouch/db':
         specifier: workspace:*
         version: link:../db
-      '@agentbox/events':
+      '@agentpouch/events':
         specifier: workspace:*
         version: link:../events
-      '@agentbox/kv':
+      '@agentpouch/kv':
         specifier: workspace:*
         version: link:../kv
-      '@agentbox/queue':
+      '@agentpouch/queue':
         specifier: workspace:*
         version: link:../queue
-      '@agentbox/scanner':
+      '@agentpouch/scanner':
         specifier: workspace:*
         version: link:../scanner
-      '@agentbox/storage':
+      '@agentpouch/storage':
         specifier: workspace:*
         version: link:../storage
       drizzle-orm:
@@ -205,7 +205,7 @@ importers:
 
   packages/events:
     dependencies:
-      '@agentbox/db':
+      '@agentpouch/db':
         specifier: workspace:*
         version: link:../db
       drizzle-orm:
@@ -224,10 +224,10 @@ importers:
 
   packages/mcp:
     dependencies:
-      '@agentbox/contracts':
+      '@agentpouch/contracts':
         specifier: workspace:*
         version: link:../contracts
-      '@agentbox/core':
+      '@agentpouch/core':
         specifier: workspace:*
         version: link:../core
       '@modelcontextprotocol/sdk':
@@ -258,22 +258,22 @@ importers:
 
   packages/server:
     dependencies:
-      '@agentbox/auth':
+      '@agentpouch/auth':
         specifier: workspace:*
         version: link:../auth
-      '@agentbox/contracts':
+      '@agentpouch/contracts':
         specifier: workspace:*
         version: link:../contracts
-      '@agentbox/core':
+      '@agentpouch/core':
         specifier: workspace:*
         version: link:../core
-      '@agentbox/db':
+      '@agentpouch/db':
         specifier: workspace:*
         version: link:../db
-      '@agentbox/mcp':
+      '@agentpouch/mcp':
         specifier: workspace:*
         version: link:../mcp
-      '@agentbox/observability':
+      '@agentpouch/observability':
         specifier: workspace:*
         version: link:../observability
       '@hono/zod-openapi':
@@ -301,11 +301,11 @@ importers:
 
   packages/storage-local:
     dependencies:
-      '@agentbox/storage':
+      '@agentpouch/storage':
         specifier: workspace:*
         version: link:../storage
     devDependencies:
-      '@agentbox/testkit':
+      '@agentpouch/testkit':
         specifier: workspace:*
         version: link:../testkit
       typescript:
@@ -314,7 +314,7 @@ importers:
 
   packages/storage-s3:
     dependencies:
-      '@agentbox/storage':
+      '@agentpouch/storage':
         specifier: workspace:*
         version: link:../storage
       '@aws-sdk/client-s3':
@@ -324,7 +324,7 @@ importers:
         specifier: ^3.1053.0
         version: 3.1053.0
     devDependencies:
-      '@agentbox/testkit':
+      '@agentpouch/testkit':
         specifier: workspace:*
         version: link:../testkit
       typescript:
@@ -333,7 +333,7 @@ importers:
 
   packages/testkit:
     dependencies:
-      '@agentbox/storage':
+      '@agentpouch/storage':
         specifier: workspace:*
         version: link:../storage
     devDependencies:

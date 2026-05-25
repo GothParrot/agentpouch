@@ -54,12 +54,12 @@ export class AgentPouchError extends Error {
 
 export class AgentPouchClient {
   private readonly baseUrl: string;
-  private readonly headers: Record<string, string>;
+  private readonly headers: { "content-type": string; authorization?: string };
 
   constructor(opts: { baseUrl: string; apiKey?: string }) {
     this.baseUrl = opts.baseUrl.replace(/\/$/, "");
     this.headers = { "content-type": "application/json" };
-    if (opts.apiKey) this.headers["authorization"] = `Bearer ${opts.apiKey}`;
+    if (opts.apiKey) this.headers.authorization = `Bearer ${opts.apiKey}`;
   }
 
   private async request<T>(
@@ -67,12 +67,13 @@ export class AgentPouchClient {
     path: string,
     opts?: { body?: unknown; headers?: Record<string, string>; isForm?: boolean },
   ): Promise<T> {
-    const headers: Record<string, string> = { ...this.headers };
+    let headers: Record<string, string> = { ...this.headers };
     if (opts?.headers) Object.assign(headers, opts.headers);
 
     let fetchBody: string | FormData | null = null;
     if (opts?.isForm && opts.body instanceof FormData) {
-      delete headers["content-type"];
+      const { "content-type": _ct, ...rest } = headers;
+      headers = rest;
       fetchBody = opts.body;
     } else if (opts?.body !== undefined) {
       fetchBody = JSON.stringify(opts.body);

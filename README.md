@@ -14,18 +14,13 @@ curl -X POST https://agentpouch.sh/v1/ingest \
 
 No token, no account, no server. Guest uploads expire after 1 day and are capped at 10 MB.
 
-**Via MCP** — add this to your project's `.claude/settings.json`:
+**Via MCP** — register the server in your MCP client:
 
-```jsonc
-{
-  "mcpServers": {
-    "agentpouch": {
-      "type": "http",
-      "url": "https://agentpouch.sh/v1/mcp"
-    }
-  }
-}
 ```
+https://agentpouch.sh/v1/mcp
+```
+
+No auth header needed for guest mode. Most clients accept an HTTP MCP server URL directly.
 
 For longer retention, larger files, or private instances, self-host.
 
@@ -85,21 +80,13 @@ Caddy automatically obtains and renews a TLS certificate. Files get `https://fil
 
 ## Connect an AI agent via MCP (self-hosted)
 
-```jsonc
-{
-  "mcpServers": {
-    "agentpouch": {
-      "type": "http",
-      "url": "http://localhost:8080/v1/mcp",
-      "headers": {
-        "Authorization": "Bearer dev-token-change-me"
-      }
-    }
-  }
-}
+Register this URL in your MCP client:
+
+```
+http://localhost:8080/v1/mcp
 ```
 
-Replace `localhost:8080` with your domain and update the token for production. To enable guest mode on your instance, set `ENABLE_GUEST_MODE=true` and omit `headers`.
+Pass `Authorization: Bearer <token>` as a request header. Replace `localhost:8080` with your domain for production. To enable guest mode, set `ENABLE_GUEST_MODE=true` and omit the auth header.
 
 The agent gets 10 tools immediately:
 

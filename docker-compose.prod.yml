@@ -1,6 +1,6 @@
 services:
   agentpouch:
-    image: agentpouch/agentpouch:latest
+    image: fengjiaop/agentpouch:latest
     environment:
       DATABASE_URL: postgres://agentpouch:${DB_PASSWORD}@db:5432/agentpouch
       API_TOKEN: ${API_TOKEN}

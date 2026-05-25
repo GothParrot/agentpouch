@@ -1,6 +1,6 @@
 # AgentPouch
 
-AgentPouch is a self-hostable file handoff service for AI agents. It gives agents a place to store files, generate shareable links for humans, and receive uploads from humans — all without requiring any code changes to your application. Agents interact through a REST API or a built-in MCP server; humans receive clean download or upload links that work in any browser.
+A self-hostable file handoff service for AI agents. Agents store files, generate shareable links for humans, and receive uploads from humans — all via a REST API or a built-in MCP server. Humans get clean download or upload links that work in any browser, no account required.
 
 ---
 
@@ -8,18 +8,15 @@ AgentPouch is a self-hostable file handoff service for AI agents. It gives agent
 
 ### Development / internal use
 
-Start AgentPouch with a single Docker Compose command. No domain or TLS required.
-
 ```bash
-# Clone and start
 git clone https://github.com/agentpouch-sh/agentpouch
 cd agentpouch
 docker compose up -d
 ```
 
-The server starts on `http://localhost:8080`. Your API token is `dev-token-change-me` — change it in `docker-compose.yml` before sharing access.
+The server starts on `http://localhost:8080`. The default API token is `dev-token-change-me` — change it in `docker-compose.yml` before sharing access.
 
-**Or run with a single docker command** (bring your own Postgres):
+**Single-container (bring your own Postgres):**
 
 ```bash
 docker run -d \
@@ -34,16 +31,14 @@ docker run -d \
 
 ### Production (public human-facing links)
 
-Point a domain at your server, then run with Caddy for automatic TLS via Let's Encrypt.
+Point a domain at your server and run with Caddy for automatic TLS.
 
-**1. Copy and edit the env file:**
+**1. Create your env file:**
 
 ```bash
 cp .env.example .env.prod
-# Edit .env.prod — at minimum set DOMAIN, DB_PASSWORD, and API_TOKEN
+# Set DOMAIN, DB_PASSWORD, and API_TOKEN at minimum
 ```
-
-**.env.prod minimum:**
 
 ```env
 DOMAIN=files.your-domain.example.com
@@ -63,7 +58,7 @@ Caddy automatically obtains and renews a TLS certificate. Files get `https://fil
 
 ## Connect an AI agent via MCP
 
-Add this block to your project's `.claude/settings.json`:
+Add this to your project's `.claude/settings.json`:
 
 ```jsonc
 {
@@ -79,51 +74,48 @@ Add this block to your project's `.claude/settings.json`:
 }
 ```
 
-For guest mode (no token), omit the `headers` key entirely. For production, swap `localhost:8080` for your domain and update the token.
+For guest mode (no token required), omit the `headers` key. For production, replace `localhost:8080` with your domain and update the token.
 
-The agent immediately gets 10 tools: `store_file`, `fetch_file`, `file_info`, `create_upload_request`, `upload_request_info`, `revoke_file`, `delete_file`, `extend_file_expiry`, `list_files`, `list_run_artifacts`.
+The agent gets 10 tools immediately:
+
+| Tool | What it does |
+|---|---|
+| `store_file` | Fetch a URL and store it |
+| `fetch_file` | Get a download URL for a stored file |
+| `file_info` | Get metadata without fetching bytes |
+| `create_upload_request` | Generate a link for a human to upload a file |
+| `upload_request_info` | Poll an upload request for completion |
+| `revoke_file` | Invalidate a file's link |
+| `delete_file` | Soft-delete a file |
+| `extend_file_expiry` | Push a file's expiry forward |
+| `list_files` | List files, with optional filters |
+| `list_run_artifacts` | List all files for a given `run_id` |
 
 ---
 
-## CLI
+## REST API
 
-Install:
+The full OpenAPI spec is served at `/openapi.json` on any running instance.
 
-```bash
-npm install -g @agentpouch/cli
+Key endpoints:
+
+```
+POST   /v1/ingest                    Upload or fetch a file
+GET    /v1/files                     List files
+GET    /v1/files/:id                 File metadata
+GET    /v1/files/:id/download        Download file bytes
+POST   /v1/files/:id/revoke          Revoke a file
+DELETE /v1/files/:id                 Soft-delete a file
+POST   /v1/files/:id/erase           Hard-delete (GDPR) — bootstrap token only
+POST   /v1/files/:id/extend          Extend expiry
+POST   /v1/upload-requests           Create an upload request
+GET    /v1/upload-requests/:id       Get upload request status
+GET    /v1/f/:shortid                Human-facing download page or file bytes
+POST   /u/:shortid                   Human-facing upload form submission
+GET    /healthz                      Liveness and readiness check
 ```
 
-Upload a file (guest mode, hosted service):
-
-```bash
-agentpouch upload ./report.pdf
-```
-
-Upload to your self-hosted instance with a token:
-
-```bash
-agentpouch upload ./report.pdf --url http://localhost:8080 --token dev-token-change-me
-```
-
-All commands:
-
-```bash
-agentpouch upload <file> [--expires-in <preset>] [--filename <name>] [--json]
-agentpouch download <id-or-url>
-agentpouch upload-request create --expires-in <preset> [--filename-hint <name>] [--json]
-agentpouch upload-request info <id> [--json]
-agentpouch file info <id> [--json]
-agentpouch file revoke <id>
-agentpouch file delete <id>
-agentpouch file extend <id> --ttl <preset>
-```
-
-Set defaults via environment:
-
-```bash
-export AGENTPOUCH_URL=http://localhost:8080
-export AGENTPOUCH_API_KEY=dev-token-change-me
-```
+All `/v1` routes require `Authorization: Bearer <token>` unless guest mode is enabled.
 
 ---
 
@@ -137,8 +129,6 @@ export AGENTPOUCH_API_KEY=dev-token-change-me
 | `7d`   | 7 days (default) |
 | `30d`  | 30 days |
 
-Files without an explicit expiry never expire (subject to your `DEFAULT_TTL` server config).
-
 ---
 
 ## Storage backends
@@ -151,28 +141,7 @@ Files without an explicit expiry never expire (subject to your `DEFAULT_TTL` ser
 | MinIO | `STORAGE=s3` | Set `S3_ENDPOINT=http://minio:9000`, `S3_BUCKET`, credentials |
 | Backblaze B2 | `STORAGE=s3` | Set `S3_ENDPOINT=https://s3.<region>.backblazeb2.com`, `S3_BUCKET` |
 
-See [docs/storage.md](./docs/storage.md) for full configuration details.
-
----
-
-## Security note
-
-**AgentPouch v0 does not scan uploaded files for malware.** All files are stored and served as-is. If you enable guest mode or expose your instance publicly, ensure you understand the implications. Malware scanning via ClamAV or a cloud scanning service is planned for v0.1.
-
----
-
-## Hosted vs self-hosted
-
-| | Self-hosted | Hosted (agentpouch.sh) |
-|---|---|---|
-| Domain required | Yes (for production TLS) | No — domain and TLS provided |
-| Server required | Yes | No |
-| TLS setup | Automatic via Caddy | Automatic |
-| Data residency | Your server | AgentPouch infrastructure |
-| Guest mode | Opt-in | Available on free tier |
-| Setup time | ~5 minutes | Instant |
-
-On the hosted service, agents and developers need no domain, no server, and no TLS setup. Point your MCP client at `https://agentpouch.sh/v1/mcp` and go.
+See [docs/storage.md](./docs/storage.md) for full details.
 
 ---
 
@@ -201,3 +170,9 @@ Copy `.env.example` to `.env` and edit. All variables with defaults are optional
 | `DEFAULT_TTL` | `7d` | Default expiry when none specified |
 | `ALLOWED_EXPIRY_PRESETS` | `10m,1d,3d,7d,30d` | Comma-separated allowed presets |
 | `SHORTLINK_DOMAIN` | — | Optional vanity domain for short links |
+
+---
+
+## Security note
+
+**AgentPouch v0 does not scan uploaded files for malware.** All files are stored and served as-is. If you enable guest mode or expose your instance publicly, ensure you understand the implications.

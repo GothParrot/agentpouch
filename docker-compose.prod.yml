@@ -7,6 +7,9 @@ services:
       PUBLIC_BASE_URL: https://${DOMAIN}
       AUTO_MIGRATE: "true"
       NODE_ENV: production
+      ENABLE_GUEST_MODE: ${ENABLE_GUEST_MODE:-false}
+      GUEST_MAX_FILE_SIZE: ${GUEST_MAX_FILE_SIZE:-10485760}
+      GUEST_MAX_TTL: ${GUEST_MAX_TTL:-1d}
       STORAGE: ${STORAGE:-local}
       STORAGE_PATH: /data
       # S3 / R2 (uncomment when STORAGE=s3)

@@ -1,5 +1,5 @@
-import { before, describe, it } from "node:test";
 import assert from "node:assert/strict";
+import { before, describe, it } from "node:test";
 import type { StorageProvider } from "@agentpouch/storage";
 
 async function readAll(readable: ReadableStream<Uint8Array>): Promise<Buffer> {
@@ -18,7 +18,12 @@ function randomBytes(n: number): Uint8Array {
 }
 
 function toStream(data: Uint8Array): ReadableStream<Uint8Array> {
-  return new ReadableStream({ start(c) { c.enqueue(data); c.close(); } });
+  return new ReadableStream({
+    start(c) {
+      c.enqueue(data);
+      c.close();
+    },
+  });
 }
 
 export function runStorageConformanceSuite(

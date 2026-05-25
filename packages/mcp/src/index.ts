@@ -1,5 +1,3 @@
-import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
-import { WebStandardStreamableHTTPServerTransport } from "@modelcontextprotocol/sdk/server/webStandardStreamableHttp.js";
 import {
   CreateUploadRequestInput,
   DeleteFileInput,
@@ -13,6 +11,8 @@ import {
   UploadRequestInfoInput,
 } from "@agentpouch/contracts";
 import {
+  type AuthContext,
+  type CoreDeps,
   createUploadRequest,
   deleteFile,
   extendFileExpiry,
@@ -21,9 +21,9 @@ import {
   listFiles,
   listRunArtifacts,
   revokeFile,
-  type AuthContext,
-  type CoreDeps,
 } from "@agentpouch/core";
+import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
+import { WebStandardStreamableHTTPServerTransport } from "@modelcontextprotocol/sdk/server/webStandardStreamableHttp.js";
 
 // ─── Shared helpers ───────────────────────────────────────────────────────────
 

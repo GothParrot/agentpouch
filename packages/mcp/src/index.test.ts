@@ -1,7 +1,7 @@
+import assert from "node:assert/strict";
 // Contract tests: verify each tool's input/output schemas accept valid shapes.
 // This guards against drift between the contracts package and the MCP tool registration.
 import { describe, it } from "node:test";
-import assert from "node:assert/strict";
 import {
   CreateUploadRequestInput,
   CreateUploadRequestOutput,
@@ -34,7 +34,7 @@ const SAMPLE_REF = {
   id: REF_ID,
   shortid: "abc123",
   agent_link: `http://localhost:8080/v1/files/${REF_ID}`,
-  human_link: `http://localhost:8080/v1/f/abc123`,
+  human_link: "http://localhost:8080/v1/f/abc123",
   sha256: "a".repeat(64),
   mime: "text/plain",
   size: 42,
@@ -58,7 +58,7 @@ const SAMPLE_REF = {
 const SAMPLE_UPLOAD_REQUEST = {
   id: REQ_ID,
   shortid: "up123",
-  upload_link: `http://localhost:8080/u/up123`,
+  upload_link: "http://localhost:8080/u/up123",
   status: "pending" as const,
   filename_hint: null,
   scope: null,
@@ -119,8 +119,7 @@ describe("MCP contract schemas", () => {
   it("fetch_file — input/output roundtrip", () => {
     assert.ok(FetchFileInput.safeParse({ id: REF_ID }).success);
     assert.ok(
-      FetchFileOutput.safeParse({ url: "https://example.com/presigned", file: SAMPLE_REF })
-        .success,
+      FetchFileOutput.safeParse({ url: "https://example.com/presigned", file: SAMPLE_REF }).success,
     );
   });
 

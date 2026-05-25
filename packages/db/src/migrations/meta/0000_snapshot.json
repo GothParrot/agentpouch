@@ -91,12 +91,8 @@
           "name": "access_events_reference_id_references_id_fk",
           "tableFrom": "access_events",
           "tableTo": "references",
-          "columnsFrom": [
-            "reference_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["reference_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -151,12 +147,8 @@
           "name": "accounts_tenant_id_tenants_id_fk",
           "tableFrom": "accounts",
           "tableTo": "tenants",
-          "columnsFrom": [
-            "tenant_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["tenant_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -166,9 +158,7 @@
         "accounts_username_unique": {
           "name": "accounts_username_unique",
           "nullsNotDistinct": false,
-          "columns": [
-            "username"
-          ]
+          "columns": ["username"]
         }
       },
       "policies": {},
@@ -486,12 +476,8 @@
           "name": "references_tenant_id_tenants_id_fk",
           "tableFrom": "references",
           "tableTo": "tenants",
-          "columnsFrom": [
-            "tenant_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["tenant_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         },
@@ -499,12 +485,8 @@
           "name": "references_account_id_accounts_id_fk",
           "tableFrom": "references",
           "tableTo": "accounts",
-          "columnsFrom": [
-            "account_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["account_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         },
@@ -512,12 +494,8 @@
           "name": "references_token_id_tokens_id_fk",
           "tableFrom": "references",
           "tableTo": "tokens",
-          "columnsFrom": [
-            "token_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["token_id"],
+          "columnsTo": ["id"],
           "onDelete": "set null",
           "onUpdate": "no action"
         },
@@ -525,12 +503,8 @@
           "name": "references_blob_sha256_blobs_sha256_fk",
           "tableFrom": "references",
           "tableTo": "blobs",
-          "columnsFrom": [
-            "blob_sha256"
-          ],
-          "columnsTo": [
-            "sha256"
-          ],
+          "columnsFrom": ["blob_sha256"],
+          "columnsTo": ["sha256"],
           "onDelete": "restrict",
           "onUpdate": "no action"
         }
@@ -540,17 +514,12 @@
         "references_shortid_unique": {
           "name": "references_shortid_unique",
           "nullsNotDistinct": false,
-          "columns": [
-            "shortid"
-          ]
+          "columns": ["shortid"]
         },
         "references_token_idempotency_key_unique": {
           "name": "references_token_idempotency_key_unique",
           "nullsNotDistinct": false,
-          "columns": [
-            "token_id",
-            "idempotency_key"
-          ]
+          "columns": ["token_id", "idempotency_key"]
         }
       },
       "policies": {},
@@ -699,12 +668,8 @@
           "name": "tokens_tenant_id_tenants_id_fk",
           "tableFrom": "tokens",
           "tableTo": "tenants",
-          "columnsFrom": [
-            "tenant_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["tenant_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         },
@@ -712,12 +677,8 @@
           "name": "tokens_account_id_accounts_id_fk",
           "tableFrom": "tokens",
           "tableTo": "accounts",
-          "columnsFrom": [
-            "account_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["account_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -727,9 +688,7 @@
         "tokens_token_hash_unique": {
           "name": "tokens_token_hash_unique",
           "nullsNotDistinct": false,
-          "columns": [
-            "token_hash"
-          ]
+          "columns": ["token_hash"]
         }
       },
       "policies": {},
@@ -958,12 +917,8 @@
           "name": "upload_requests_tenant_id_tenants_id_fk",
           "tableFrom": "upload_requests",
           "tableTo": "tenants",
-          "columnsFrom": [
-            "tenant_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["tenant_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         },
@@ -971,12 +926,8 @@
           "name": "upload_requests_account_id_accounts_id_fk",
           "tableFrom": "upload_requests",
           "tableTo": "accounts",
-          "columnsFrom": [
-            "account_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["account_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         },
@@ -984,12 +935,8 @@
           "name": "upload_requests_token_id_tokens_id_fk",
           "tableFrom": "upload_requests",
           "tableTo": "tokens",
-          "columnsFrom": [
-            "token_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["token_id"],
+          "columnsTo": ["id"],
           "onDelete": "set null",
           "onUpdate": "no action"
         },
@@ -997,12 +944,8 @@
           "name": "upload_requests_fulfilled_reference_id_references_id_fk",
           "tableFrom": "upload_requests",
           "tableTo": "references",
-          "columnsFrom": [
-            "fulfilled_reference_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["fulfilled_reference_id"],
+          "columnsTo": ["id"],
           "onDelete": "set null",
           "onUpdate": "no action"
         }
@@ -1012,9 +955,7 @@
         "upload_requests_shortid_unique": {
           "name": "upload_requests_shortid_unique",
           "nullsNotDistinct": false,
-          "columns": [
-            "shortid"
-          ]
+          "columns": ["shortid"]
         }
       },
       "policies": {},
@@ -1089,12 +1030,8 @@
           "name": "webhooks_tenant_id_tenants_id_fk",
           "tableFrom": "webhooks",
           "tableTo": "tenants",
-          "columnsFrom": [
-            "tenant_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["tenant_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         },
@@ -1102,12 +1039,8 @@
           "name": "webhooks_account_id_accounts_id_fk",
           "tableFrom": "webhooks",
           "tableTo": "accounts",
-          "columnsFrom": [
-            "account_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["account_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         },
@@ -1115,12 +1048,8 @@
           "name": "webhooks_token_id_tokens_id_fk",
           "tableFrom": "webhooks",
           "tableTo": "tokens",
-          "columnsFrom": [
-            "token_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["token_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -1136,39 +1065,22 @@
     "public.direction": {
       "name": "direction",
       "schema": "public",
-      "values": [
-        "ingest",
-        "serve"
-      ]
+      "values": ["ingest", "serve"]
     },
     "public.event_type": {
       "name": "event_type",
       "schema": "public",
-      "values": [
-        "created",
-        "accessed",
-        "revoked",
-        "deleted",
-        "expired"
-      ]
+      "values": ["created", "accessed", "revoked", "deleted", "expired"]
     },
     "public.token_kind": {
       "name": "token_kind",
       "schema": "public",
-      "values": [
-        "bootstrap",
-        "api_key",
-        "guest_session"
-      ]
+      "values": ["bootstrap", "api_key", "guest_session"]
     },
     "public.upload_request_status": {
       "name": "upload_request_status",
       "schema": "public",
-      "values": [
-        "pending",
-        "completed",
-        "expired"
-      ]
+      "values": ["pending", "completed", "expired"]
     }
   },
   "schemas": {},

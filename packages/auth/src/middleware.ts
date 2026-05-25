@@ -1,9 +1,9 @@
-import { eq } from "drizzle-orm";
 import type { Db } from "@agentpouch/db";
 import { tokens } from "@agentpouch/db";
+import { eq } from "drizzle-orm";
 import type { Context, MiddlewareHandler, Next } from "hono";
 import { hashToken } from "./hash.js";
-import { resolvePolicy, type DefaultLimits } from "./policy.js";
+import { type DefaultLimits, resolvePolicy } from "./policy.js";
 import type { AuthContext } from "./types.js";
 
 export type AuthMiddlewareOptions = {

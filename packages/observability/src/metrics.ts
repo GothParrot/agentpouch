@@ -56,27 +56,27 @@ export class MetricsStore {
   toPrometheus(): string {
     const s = this.snapshot();
     const lines = [
-      `# HELP agentpouch_ingest_total Total files ingested`,
-      `# TYPE agentpouch_ingest_total counter`,
+      "# HELP agentpouch_ingest_total Total files ingested",
+      "# TYPE agentpouch_ingest_total counter",
       `agentpouch_ingest_total ${s.ingest_count}`,
-      `# HELP agentpouch_serve_total Total files served`,
-      `# TYPE agentpouch_serve_total counter`,
+      "# HELP agentpouch_serve_total Total files served",
+      "# TYPE agentpouch_serve_total counter",
       `agentpouch_serve_total ${s.serve_count}`,
-      `# HELP agentpouch_upload_request_total Total upload requests created`,
-      `# TYPE agentpouch_upload_request_total counter`,
+      "# HELP agentpouch_upload_request_total Total upload requests created",
+      "# TYPE agentpouch_upload_request_total counter",
       `agentpouch_upload_request_total ${s.upload_request_count}`,
-      `# HELP agentpouch_errors_total Total errors by route`,
-      `# TYPE agentpouch_errors_total counter`,
+      "# HELP agentpouch_errors_total Total errors by route",
+      "# TYPE agentpouch_errors_total counter",
       ...Object.entries(s.errors_by_route).map(
         ([route, count]) => `agentpouch_errors_total{route="${route}"} ${count}`,
       ),
-      `# HELP agentpouch_bytes_uploaded_total Total bytes uploaded`,
-      `# TYPE agentpouch_bytes_uploaded_total counter`,
+      "# HELP agentpouch_bytes_uploaded_total Total bytes uploaded",
+      "# TYPE agentpouch_bytes_uploaded_total counter",
       `agentpouch_bytes_uploaded_total ${s.bytes_uploaded}`,
-      `# HELP agentpouch_bytes_served_total Total bytes served`,
-      `# TYPE agentpouch_bytes_served_total counter`,
+      "# HELP agentpouch_bytes_served_total Total bytes served",
+      "# TYPE agentpouch_bytes_served_total counter",
       `agentpouch_bytes_served_total ${s.bytes_served}`,
     ];
-    return lines.join("\n") + "\n";
+    return `${lines.join("\n")}\n`;
   }
 }

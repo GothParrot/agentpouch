@@ -1,6 +1,6 @@
 import { before, it } from "node:test";
-import { CreateBucketCommand, S3Client } from "@aws-sdk/client-s3";
 import { runStorageConformanceSuite } from "@agentpouch/testkit";
+import { CreateBucketCommand, S3Client } from "@aws-sdk/client-s3";
 import { S3Storage } from "./index.js";
 
 const {
@@ -37,5 +37,9 @@ if (endpoint && accessKeyId && secretAccessKey) {
     "redirect",
   );
 } else {
-  it("S3Storage — skipped (S3_ENDPOINT / credentials not set)", { skip: "env vars not set" }, () => {});
+  it(
+    "S3Storage — skipped (S3_ENDPOINT / credentials not set)",
+    { skip: "env vars not set" },
+    () => {},
+  );
 }

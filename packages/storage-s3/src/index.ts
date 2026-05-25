@@ -1,3 +1,4 @@
+import type { PutOptions, ServeStrategy, StorageProvider } from "@agentpouch/storage";
 import {
   DeleteObjectCommand,
   GetObjectCommand,
@@ -5,7 +6,6 @@ import {
   S3Client,
 } from "@aws-sdk/client-s3";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
-import type { PutOptions, ServeStrategy, StorageProvider } from "@agentpouch/storage";
 
 export type S3StorageOptions = {
   bucket: string;
@@ -56,9 +56,7 @@ export class S3Storage implements StorageProvider {
   }
 
   async get(key: string): Promise<ReadableStream<Uint8Array>> {
-    const resp = await this.client.send(
-      new GetObjectCommand({ Bucket: this.bucket, Key: key }),
-    );
+    const resp = await this.client.send(new GetObjectCommand({ Bucket: this.bucket, Key: key }));
     if (!resp.Body) throw new Error(`S3 object not found: ${key}`);
     const nodeStream = resp.Body as unknown as import("node:stream").Readable;
     const { Readable } = await import("node:stream");

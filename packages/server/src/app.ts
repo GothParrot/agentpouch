@@ -1,5 +1,4 @@
 import { type AuthMiddlewareOptions, createAuthMiddleware } from "@agentpouch/auth";
-import { createMcpHandler } from "@agentpouch/mcp";
 import {
   createUploadRequestRoute,
   deleteFileRoute,
@@ -9,7 +8,6 @@ import {
   fileInfoRoute,
   getUploadRequestRoute,
   healthzRoute,
-  ingestRoute,
   listFilesRoute,
   listRunArtifactsRoute,
   revokeFileRoute,
@@ -18,6 +16,7 @@ import {
   uploadSubmitRoute,
 } from "@agentpouch/contracts";
 import type { CoreDeps } from "@agentpouch/core";
+import { createMcpHandler } from "@agentpouch/mcp";
 import type { Logger } from "@agentpouch/observability";
 import type { MetricsStore } from "@agentpouch/observability";
 import { OpenAPIHono } from "@hono/zod-openapi";

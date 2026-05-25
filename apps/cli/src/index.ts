@@ -19,11 +19,11 @@ function makeClient(baseUrl: string, apiKey?: string): AgentPouchClient {
 
 function out(data: unknown, json: boolean): void {
   if (json) {
-    process.stdout.write(JSON.stringify(data, null, 2) + "\n");
+    process.stdout.write(`${JSON.stringify(data, null, 2)}\n`);
   } else if (typeof data === "string") {
-    process.stdout.write(data + "\n");
+    process.stdout.write(`${data}\n`);
   } else {
-    process.stdout.write(JSON.stringify(data, null, 2) + "\n");
+    process.stdout.write(`${JSON.stringify(data, null, 2)}\n`);
   }
 }
 
@@ -82,14 +82,14 @@ const { values, positionals } = parseArgs({
   },
 });
 
-if (values["help"] || values["h"] || positionals.length === 0) {
+if (values.help || values.h || positionals.length === 0) {
   process.stdout.write(USAGE);
   process.exit(0);
 }
 
-const baseUrl = (values["url"] as string | undefined) ?? DEFAULT_BASE_URL;
-const apiKey = values["token"] as string | undefined;
-const json = Boolean(values["json"]);
+const baseUrl = (values.url as string | undefined) ?? DEFAULT_BASE_URL;
+const apiKey = values.token as string | undefined;
+const json = Boolean(values.json);
 const client = makeClient(baseUrl, apiKey);
 
 const [cmd, sub, arg] = positionals;
@@ -106,7 +106,7 @@ async function cmdUpload(): Promise<void> {
     die(`file not found: ${filePath}`);
   }
 
-  const filename = (values["filename"] as string | undefined) ?? basename(filePath);
+  const filename = (values.filename as string | undefined) ?? basename(filePath);
   const expiresIn = values["expires-in"] as ExpiryPreset | undefined;
 
   const buf = readFileSync(filePath);
@@ -206,7 +206,7 @@ async function cmdFile(): Promise<void> {
 
   if (sub === "extend") {
     if (!id) die("usage: agentpouch file extend <id> --ttl <preset>");
-    const ttl = values["ttl"] as ExpiryPreset | undefined;
+    const ttl = values.ttl as ExpiryPreset | undefined;
     if (!ttl) die("--ttl is required for file extend");
     const result = await client.extendExpiry(id, ttl);
     out(json ? result : `expires_at: ${result.expires_at}`, json);

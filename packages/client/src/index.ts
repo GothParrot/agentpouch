@@ -59,7 +59,7 @@ export class AgentPouchClient {
   constructor(opts: { baseUrl: string; apiKey?: string }) {
     this.baseUrl = opts.baseUrl.replace(/\/$/, "");
     this.headers = { "content-type": "application/json" };
-    if (opts.apiKey) this.headers["authorization"] = `Bearer ${opts.apiKey}`;
+    if (opts.apiKey) this.headers.authorization = `Bearer ${opts.apiKey}`;
   }
 
   private async request<T>(
@@ -72,7 +72,7 @@ export class AgentPouchClient {
 
     let fetchBody: string | FormData | null = null;
     if (opts?.isForm && opts.body instanceof FormData) {
-      delete headers["content-type"];
+      headers["content-type"] = undefined;
       fetchBody = opts.body;
     } else if (opts?.body !== undefined) {
       fetchBody = JSON.stringify(opts.body);
@@ -104,8 +104,7 @@ export class AgentPouchClient {
     form.append("file", file);
     if (opts.filename) form.append("filename", opts.filename);
     if (opts.expires_in) form.append("expires_in", opts.expires_in);
-    if (opts.max_downloads !== undefined)
-      form.append("max_downloads", String(opts.max_downloads));
+    if (opts.max_downloads !== undefined) form.append("max_downloads", String(opts.max_downloads));
     if (opts.scope) form.append("scope", opts.scope);
     if (opts.run_id) form.append("run_id", opts.run_id);
     if (opts.step) form.append("step", opts.step);

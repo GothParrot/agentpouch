@@ -1,16 +1,16 @@
-import { serve } from "@hono/node-server";
 import { loadConfig } from "@agentpouch/config";
-import { createDb, migrate } from "@agentpouch/db";
-import { createApp } from "@agentpouch/server";
-import { createLogger, MetricsStore } from "@agentpouch/observability";
-import { PostgresEventSink } from "@agentpouch/events";
-import { InMemoryKV } from "@agentpouch/kv";
-import { InlineQueue } from "@agentpouch/queue";
-import { NoopScanner } from "@agentpouch/scanner";
-import { LocalDiskStorage } from "@agentpouch/storage-local";
-import { S3Storage } from "@agentpouch/storage-s3";
 import { startReconciler } from "@agentpouch/core";
 import type { CoreDeps } from "@agentpouch/core";
+import { createDb, migrate } from "@agentpouch/db";
+import { PostgresEventSink } from "@agentpouch/events";
+import { InMemoryKV } from "@agentpouch/kv";
+import { MetricsStore, createLogger } from "@agentpouch/observability";
+import { InlineQueue } from "@agentpouch/queue";
+import { NoopScanner } from "@agentpouch/scanner";
+import { createApp } from "@agentpouch/server";
+import { LocalDiskStorage } from "@agentpouch/storage-local";
+import { S3Storage } from "@agentpouch/storage-s3";
+import { serve } from "@hono/node-server";
 import { upsertBootstrapToken } from "./bootstrap.js";
 
 const logger = createLogger({ level: "info" });
@@ -40,11 +40,19 @@ async function runServer(): Promise<void> {
   const storage =
     config.STORAGE === "s3"
       ? new S3Storage({
-          bucket: config.S3_BUCKET ?? (() => { throw new Error("S3_BUCKET is required when STORAGE=s3"); })(),
+          bucket:
+            config.S3_BUCKET ??
+            (() => {
+              throw new Error("S3_BUCKET is required when STORAGE=s3");
+            })(),
           region: config.S3_REGION,
           ...(config.S3_ENDPOINT !== undefined ? { endpoint: config.S3_ENDPOINT } : {}),
-          ...(config.S3_ACCESS_KEY_ID !== undefined ? { accessKeyId: config.S3_ACCESS_KEY_ID } : {}),
-          ...(config.S3_SECRET_ACCESS_KEY !== undefined ? { secretAccessKey: config.S3_SECRET_ACCESS_KEY } : {}),
+          ...(config.S3_ACCESS_KEY_ID !== undefined
+            ? { accessKeyId: config.S3_ACCESS_KEY_ID }
+            : {}),
+          ...(config.S3_SECRET_ACCESS_KEY !== undefined
+            ? { secretAccessKey: config.S3_SECRET_ACCESS_KEY }
+            : {}),
         })
       : new LocalDiskStorage(config.STORAGE_PATH);
 
@@ -70,7 +78,9 @@ async function runServer(): Promise<void> {
     logger,
     metrics,
     options: {
-      ...(config.SHORTLINK_DOMAIN !== undefined ? { shortlinkDomain: config.SHORTLINK_DOMAIN } : {}),
+      ...(config.SHORTLINK_DOMAIN !== undefined
+        ? { shortlinkDomain: config.SHORTLINK_DOMAIN }
+        : {}),
       enableGuestMode: config.ENABLE_GUEST_MODE,
       maxFileSizeBytes: config.MAX_FILE_SIZE,
       allowedExpiryPresets: config.ALLOWED_EXPIRY_PRESETS,

@@ -16,9 +16,9 @@ function write(level: LogLevel, minLevel: LogLevel, msg: string, ctx: LogContext
   if (LEVELS[level] < LEVELS[minLevel]) return;
   const line = JSON.stringify({ level, msg, ...ctx, time: new Date().toISOString() });
   if (level === "error" || level === "warn") {
-    process.stderr.write(line + "\n");
+    process.stderr.write(`${line}\n`);
   } else {
-    process.stdout.write(line + "\n");
+    process.stdout.write(`${line}\n`);
   }
 }
 

@@ -1,6 +1,35 @@
 # AgentPouch
 
-A self-hostable file handoff service for AI agents. Agents store files, generate shareable links for humans, and receive uploads from humans — all via a REST API or a built-in MCP server. Humans get clean download or upload links that work in any browser, no account required.
+A file handoff service for AI agents. Agents store files, generate shareable links for humans, and receive uploads from humans — via a REST API or a built-in MCP server. Humans get clean download or upload links that work in any browser, no account required.
+
+---
+
+## Quickstart — hosted (no setup)
+
+Add this to your project's `.claude/settings.json` and you're done:
+
+```jsonc
+{
+  "mcpServers": {
+    "agentpouch": {
+      "type": "http",
+      "url": "https://agentpouch.sh/v1/mcp"
+    }
+  }
+}
+```
+
+No token, no account, no server. The agent can store and share files immediately.
+
+Or via the REST API directly:
+
+```bash
+curl -X POST https://agentpouch.sh/v1/ingest \
+  -F "file=@./report.pdf"
+# → { "human_link": "https://agentpouch.sh/v1/f/abc123", ... }
+```
+
+Guest uploads expire after 1 day and are capped at 10 MB. For longer retention, larger files, or private instances, self-host.
 
 ---
 
@@ -56,9 +85,7 @@ Caddy automatically obtains and renews a TLS certificate. Files get `https://fil
 
 ---
 
-## Connect an AI agent via MCP
-
-Add this to your project's `.claude/settings.json`:
+## Connect an AI agent via MCP (self-hosted)
 
 ```jsonc
 {
@@ -74,7 +101,7 @@ Add this to your project's `.claude/settings.json`:
 }
 ```
 
-For guest mode (no token required), omit the `headers` key. For production, replace `localhost:8080` with your domain and update the token.
+Replace `localhost:8080` with your domain and update the token for production. To enable guest mode on your instance, set `ENABLE_GUEST_MODE=true` and omit `headers`.
 
 The agent gets 10 tools immediately:
 

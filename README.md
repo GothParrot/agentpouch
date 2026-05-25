@@ -6,7 +6,15 @@ A file handoff service for AI agents. Agents store files, generate shareable lin
 
 ## Quickstart — hosted (no setup)
 
-Add this to your project's `.claude/settings.json` and you're done:
+```bash
+curl -X POST https://agentpouch.sh/v1/ingest \
+  -F "file=@./report.pdf"
+# → { "human_link": "https://agentpouch.sh/v1/f/abc123", ... }
+```
+
+No token, no account, no server. Guest uploads expire after 1 day and are capped at 10 MB.
+
+**Via MCP** — add this to your project's `.claude/settings.json`:
 
 ```jsonc
 {
@@ -19,17 +27,7 @@ Add this to your project's `.claude/settings.json` and you're done:
 }
 ```
 
-No token, no account, no server. The agent can store and share files immediately.
-
-Or via the REST API directly:
-
-```bash
-curl -X POST https://agentpouch.sh/v1/ingest \
-  -F "file=@./report.pdf"
-# → { "human_link": "https://agentpouch.sh/v1/f/abc123", ... }
-```
-
-Guest uploads expire after 1 day and are capped at 10 MB. For longer retention, larger files, or private instances, self-host.
+For longer retention, larger files, or private instances, self-host.
 
 ---
 

@@ -11,7 +11,8 @@ export class AgentPouchError extends Error {
 
 export class FileTooLargeError extends AgentPouchError {
   constructor(size: number, maxBytes: number) {
-    super("FILE_TOO_LARGE", `File size ${size} exceeds limit ${maxBytes}`, 413);
+    const mb = (b: number) => `${(b / 1024 / 1024).toFixed(1)} MB`;
+    super("FILE_TOO_LARGE", `File size ${mb(size)} exceeds limit ${mb(maxBytes)}`, 413);
   }
 }
 

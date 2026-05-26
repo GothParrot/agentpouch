@@ -12,7 +12,7 @@ export type Policy = {
 
 export type AuthContext = {
   kind: AuthKind;
-  tokenId: string;
+  tokenId: string | null;
   tenantId: string | null;
   accountId: string | null;
   policy: Policy;

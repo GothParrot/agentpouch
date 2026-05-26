@@ -27,7 +27,7 @@ export function createAuthMiddleware(opts: AuthMiddlewareOptions): MiddlewareHan
         // Transient guest — real guest session persistence is wired in Step 9
         c.set("auth", {
           kind: "guest_session",
-          tokenId: "guest",
+          tokenId: null,
           tenantId: null,
           accountId: null,
           policy: resolvePolicy(

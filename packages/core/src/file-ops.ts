@@ -241,8 +241,10 @@ export async function listFiles(deps: CoreDeps, input: ListFilesInput) {
 
   if (input.auth.tenantId) {
     filters.push(eq(references.tenantId, input.auth.tenantId));
-  } else {
+  } else if (input.auth.tokenId) {
     filters.push(eq(references.tokenId, input.auth.tokenId));
+  } else {
+    filters.push(isNull(references.tokenId));
   }
 
   if (input.scope) filters.push(eq(references.scope, input.scope));
@@ -277,8 +279,10 @@ export async function listRunArtifacts(deps: CoreDeps, opts: { auth: AuthContext
 
   if (opts.auth.tenantId) {
     filters.push(eq(references.tenantId, opts.auth.tenantId));
-  } else {
+  } else if (opts.auth.tokenId) {
     filters.push(eq(references.tokenId, opts.auth.tokenId));
+  } else {
+    filters.push(isNull(references.tokenId));
   }
 
   return db.query.references.findMany({

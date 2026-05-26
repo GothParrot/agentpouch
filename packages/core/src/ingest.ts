@@ -51,8 +51,11 @@ export async function ingestFile(deps: CoreDeps, input: IngestInput) {
     }
   }
 
-  // Validate TTL preset
-  const expiresIn = input.expiresIn ?? defaultTtl;
+  // Validate TTL preset — when none provided, use defaultTtl capped to policy max
+  const effectiveDefault = auth.policy.allowedExpiryPresets.includes(defaultTtl)
+    ? defaultTtl
+    : (auth.policy.allowedExpiryPresets.at(-1) ?? defaultTtl);
+  const expiresIn = input.expiresIn ?? effectiveDefault;
   if (!allowedExpiryPresets.includes(expiresIn)) {
     throw new InvalidPresetError(expiresIn, allowedExpiryPresets);
   }
